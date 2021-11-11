@@ -1,6 +1,7 @@
 .grid {
   margin: auto;
-  width: 90%;
+  width: 95%;
+  height: 95%;
   border: 3px solid green;
   padding: 10px;
 }
@@ -13,7 +14,19 @@
 }
 
 .column {
-  width: 45px;
+  width: 4%;
   padding: 3px;
   display: inline-block;
+}
+
+button,
+input[type="submit"],
+input[type="reset"] {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }

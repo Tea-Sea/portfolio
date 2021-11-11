@@ -14,45 +14,60 @@ const ROW__END = 19;
 const COL_END = 19;
 
 export default class visualiser extends Component {
-  constructor() {
-    super();
-    this.state = { nodes: [] };
+  constructor(props) {
+    super(props);
+    this.state = { nodes: [], selectedNode: "None" };
   }
 
   componentDidMount() {
     const nodes = GenerateGrid();
-    this.setState({ nodes }, () => {
-      //console.log(this.state.nodes, "nodes");
-    });
+    this.setState({ nodes }, () => {});
   }
 
   handleMouseUp() {
     this.setState({ mouseIsPressed: false });
   }
 
+  displayData(node) {
+    const data =
+      "Column: " +
+      node.column +
+      "Row: " +
+      node.row +
+      "Start: " +
+      node.isStart +
+      "End: " +
+      node.isEnd;
+    this.setState({ selectedNode: data });
+  }
+
   render() {
     const { nodes } = this.state;
-    console.log(this.state, "rendered");
-
-    console.log(this.state, "output");
 
     return (
       <>
         <div className="grid">
-          {nodes.map((row) => (
-            <div className="row">
-              {row.map((node) => (
-                <div className="column">
+          {nodes.map((row, rowID) => (
+            <div key={rowID} className="row">
+              {row.map((node, nodeID) => (
+                <button
+                  key={nodeID}
+                  className="column"
+                  onClick={() => this.displayData(node)}
+                >
                   <Node
-                    className="individualNode"
+                    className="node"
                     column={node.column}
                     row={node.row}
+                    isStart={node.isStart}
+                    isEnd={node.isEnd}
                   ></Node>
-                </div>
+                </button>
               ))}
             </div>
           ))}
         </div>
+        <div>{this.state.selectedNode}</div>
       </>
     );
   }
@@ -62,8 +77,8 @@ const GenerateNode = (column, row) => {
   return {
     column: column,
     row: row,
-    //isStart: column === COL_START && row === ROW_START,
-    //isEnd: column === COL_END && row === ROW__END,
+    isStart: column === COL_START && row === ROW_START,
+    isEnd: column === COL_END && row === ROW__END,
   };
 };
 

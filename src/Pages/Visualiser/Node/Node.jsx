@@ -5,11 +5,7 @@ import "./Node.css";
 
 export default class Node extends Component {
   render() {
-    const {
-      column,
-      row,
-      //isStart,
-    } = this.props;
+    const { column, row, isStart, isEnd } = this.props;
     return (
       <div className="node">
         {column},{row}
