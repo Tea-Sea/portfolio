@@ -12,7 +12,7 @@ export default class Node extends Component {
     } = this.props;
     return (
       <div className="node">
-        node {column},{row}
+        {column},{row}
       </div>
     );
   }

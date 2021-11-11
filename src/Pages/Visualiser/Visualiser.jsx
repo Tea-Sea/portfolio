@@ -22,7 +22,7 @@ export default class visualiser extends Component {
   componentDidMount() {
     const nodes = GenerateGrid();
     this.setState({ nodes }, () => {
-      console.log(this.state.nodes, "nodes");
+      //console.log(this.state.nodes, "nodes");
     });
   }
 
@@ -31,11 +31,22 @@ export default class visualiser extends Component {
   }
 
   render() {
-    console.log("render");
-    console.log(this.state);
+    const { nodes } = this.state;
+    console.log(this.state, "rendered");
+
+    console.log(this.state, "output");
+
     return (
       <>
-        <div className="grid"></div>
+        <div className="grid">
+          {nodes.map((row) => (
+            <div className="row">
+              {row.map((node) => (
+                <Node column={node.column} row={node.row}></Node>
+              ))}
+            </div>
+          ))}
+        </div>
       </>
     );
   }
@@ -43,8 +54,8 @@ export default class visualiser extends Component {
 
 const GenerateNode = (column, row) => {
   return {
-    column,
-    row,
+    column: column,
+    row: row,
     //isStart: column === COL_START && row === ROW_START,
     //isEnd: column === COL_END && row === ROW__END,
   };
@@ -58,6 +69,7 @@ const GenerateGrid = () => {
       columns.push(GenerateNode(j, i));
     }
     rows.push(columns);
+    //console.log(rows.column, "column accessed");
   }
   return rows;
 };
