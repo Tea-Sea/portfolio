@@ -4,3 +4,16 @@
   border: 3px solid green;
   padding: 10px;
 }
+
+.row {
+  width: 100%;
+  text-align: center;
+  padding: 3px;
+  display: block;
+}
+
+.column {
+  width: 45px;
+  padding: 3px;
+  display: inline-block;
+}

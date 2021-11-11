@@ -42,7 +42,13 @@ export default class visualiser extends Component {
           {nodes.map((row) => (
             <div className="row">
               {row.map((node) => (
-                <Node column={node.column} row={node.row}></Node>
+                <div className="column">
+                  <Node
+                    className="individualNode"
+                    column={node.column}
+                    row={node.row}
+                  ></Node>
+                </div>
               ))}
             </div>
           ))}
