@@ -1,8 +1,24 @@
-.node {
+* {
   text-align: center;
+}
+
+.node {
   border: 3px solid black;
 }
 
-.node:hover {
+.node:hover,
+.start:hover,
+.end:hover {
   background-color: yellow;
+  transition: background-color 0.5s ease;
+}
+
+.start {
+  background-color: green;
+  border: 3px solid black;
+}
+
+.end {
+  background-color: red;
+  border: 3px solid black;
 }
