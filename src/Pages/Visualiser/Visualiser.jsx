@@ -32,11 +32,11 @@ export default class visualiser extends Component {
     const data =
       "Column: " +
       node.column +
-      "Row: " +
+      " Row: " +
       node.row +
-      "Start: " +
+      " Start: " +
       node.isStart +
-      "End: " +
+      " End: " +
       node.isEnd;
     this.setState({ selectedNode: data });
   }
