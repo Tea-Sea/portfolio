@@ -19,15 +19,17 @@ export default class Node extends Component {
     if (props.isEnd) {
       return "end";
     }
-    console.log(props, "PROPS");
     return "node";
   }
 
   render() {
-    const { column, row, isStart, isEnd } = this.props;
+    const { column, row, isStart, isEnd, isWall, isWalkable, neighbours } =
+      this.props;
+
+    const nodeType = isEnd ? "end" : isStart ? "start" : isWall ? "wall" : "";
 
     return (
-      <div className={this.state.node}>
+      <div className={"node " + nodeType}>
         {column},{row}
       </div>
     );

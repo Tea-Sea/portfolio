@@ -2,23 +2,23 @@
   text-align: center;
 }
 
+.node:hover {
+  background-color: yellow;
+  color: black;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
 .node {
   border: 3px solid black;
 }
 
-.node:hover,
-.start:hover,
-.end:hover {
-  background-color: yellow;
-  transition: background-color 0.5s ease;
-}
-
 .start {
   background-color: green;
-  border: 3px solid black;
 }
 
 .end {
   background-color: red;
-  border: 3px solid black;
+}
+.wall {
+  background-color: black;
+  color: white;
 }
