@@ -43,6 +43,12 @@ export default class visualiser extends Component {
 
   displayData(node) {
     //for debug purposes
+    var neighbourData = "";
+    node.neighbours.forEach(
+      (neighbour) =>
+        (neighbourData +=
+          "(" + neighbour.column + "," + neighbour.row + ")" + " ")
+    );
     const data =
       "Column: " +
       node.column +
@@ -55,7 +61,7 @@ export default class visualiser extends Component {
       " Wall: " +
       node.isWall +
       " Neighbours: " +
-      node.neighbours;
+      neighbourData;
     console.log(node.neighbours);
     this.setState({ selectedNodeData: data, nodeType: "selected" });
   }
@@ -97,11 +103,20 @@ export default class visualiser extends Component {
 const generateNeighbours = (nodes) => {
   for (var i = 0; i < ROW_LENGTH; i++) {
     for (var j = 0; j < COL_LENGTH; j++) {
-      //Add perpendicular neighbours
+      // Add perpendicular neighbours
       if (i > 0) nodes[i][j].neighbours.push(nodes[i - 1][j]);
       if (j > 0) nodes[i][j].neighbours.push(nodes[i][j - 1]);
       if (i < ROW_LENGTH - 1) nodes[i][j].neighbours.push(nodes[i + 1][j]);
       if (j < COL_LENGTH - 1) nodes[i][j].neighbours.push(nodes[i][j + 1]);
+
+      // Add diagonal neighbours
+      if (i > 0 && j > 0) nodes[i][j].neighbours.push(nodes[i - 1][j - 1]);
+      if (i < ROW_LENGTH - 1 && j > 0)
+        nodes[i][j].neighbours.push(nodes[i + 1][j - 1]);
+      if (i > 0 && j < COL_LENGTH - 1)
+        nodes[i][j].neighbours.push(nodes[i - 1][j + 1]);
+      if (i < ROW_LENGTH - 1 && j < COL_LENGTH - 1)
+        nodes[i][j].neighbours.push(nodes[i + 1][j + 1]);
     }
   }
   return nodes;
