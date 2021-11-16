@@ -7,35 +7,12 @@ export default class Node extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      node: this.determineColour(props),
+      node: "",
     };
-    //this.determineColour(props);
-  }
-
-  determineColour(props) {
-    if (props.isStart) {
-      return "start";
-    }
-    if (props.isEnd) {
-      return "end";
-    }
-    if (props.traversed) {
-      return "traversed";
-    }
-    return "node";
   }
 
   render() {
-    const {
-      column,
-      row,
-      isStart,
-      isEnd,
-      isWall,
-      isWalkable,
-      neighbours,
-      traversed,
-    } = this.props;
+    const { column, row, isStart, isEnd, isWall, traversed } = this.props;
 
     const nodeType = isEnd
       ? "end"

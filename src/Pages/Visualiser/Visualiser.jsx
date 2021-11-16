@@ -30,7 +30,7 @@ export default class visualiser extends Component {
   handleNodeClick(node) {
     if (!(node.isStart || node.isEnd)) {
       node.isWall = !node.isWall;
-      console.log(node.isStart, node.isEnd);
+      // node.neighbours.forEach((neighbour) => (neighbour.traversed = true));
     }
     this.displayData(node);
   }
@@ -60,13 +60,16 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
+  executeAStar(grid, rows, columns) {
+    console.log("Path");
+  }
+
   displayData(node) {
     // for debug purposes
     var neighbourData = "";
     node.neighbours.forEach(
       (neighbour) =>
-        (neighbourData +=
-          "(" + neighbour.column + "," + neighbour.row + ")" + " ")
+        (neighbourData += "(" + neighbour.column + "," + neighbour.row + ") ")
     );
     const data =
       "Column: " +
@@ -77,12 +80,14 @@ export default class visualiser extends Component {
       node.isStart +
       " End: " +
       node.isEnd +
-      " Wall: " +
+      " W: " +
       node.isWall +
+      " T: " +
+      node.traversed +
       " Neighbours: " +
       neighbourData;
     //console.log(node.neighbours);
-    this.setState({ selectedNodeData: data, nodeType: "selected" });
+    this.setState({ selectedNodeData: data });
   }
 
   render() {
@@ -96,6 +101,12 @@ export default class visualiser extends Component {
             onClick={() => this.generateMaze(0, nodes, ROW_LENGTH, COL_LENGTH)}
           >
             Generate Maze
+          </button>
+          <button
+            className="pathfind"
+            onClick={() => this.executeAStar(nodes, ROW_LENGTH, COL_LENGTH)}
+          >
+            A*
           </button>
           {nodes.map((row, rowID) => (
             <div key={rowID} className="row">
@@ -112,6 +123,7 @@ export default class visualiser extends Component {
                     isStart={node.isStart}
                     isEnd={node.isEnd}
                     isWall={node.isWall}
+                    traversed={node.traversed}
                   ></Node>
                 </button>
               ))}
@@ -154,6 +166,7 @@ const generateNode = (column, row) => {
     isEnd: column === COL_END && row === ROW__END,
     isWall: column === 9 && row === 8,
     isWalkable: true,
+    traversed: false,
     neighbours: [],
   };
 };
