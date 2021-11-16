@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Node from "./Node/Node";
 
+import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
+
 import "./Visualiser.css";
 
 const ROW_LENGTH = 20;
@@ -22,13 +24,16 @@ export default class visualiser extends Component {
   componentDidMount() {
     const nodes = generateGrid();
     this.setState({ nodes }, () => {});
-    this.determineType(nodes);
+    //this.determineType(nodes);
   }
 
-  handleMouseUp() {
-    this.setState({ mouseIsPressed: false });
+  handleNodeClick(node) {
+    node.isWall = !node.isWall;
+    console.log("CLICK");
+    this.displayData(node);
   }
 
+  // UNUSED
   determineType(node) {
     console.log("DETERMINE TYPE");
     if (node.isStart) {
@@ -42,7 +47,7 @@ export default class visualiser extends Component {
   }
 
   displayData(node) {
-    //for debug purposes
+    // for debug purposes
     var neighbourData = "";
     node.neighbours.forEach(
       (neighbour) =>
@@ -62,7 +67,7 @@ export default class visualiser extends Component {
       node.isWall +
       " Neighbours: " +
       neighbourData;
-    console.log(node.neighbours);
+    //console.log(node.neighbours);
     this.setState({ selectedNodeData: data, nodeType: "selected" });
   }
 
@@ -72,17 +77,22 @@ export default class visualiser extends Component {
     return (
       <>
         <div className="grid">
+          <button
+            className="randomise"
+            onClick={() => randomiser(nodes, ROW_LENGTH, COL_LENGTH)}
+          >
+            Generate Maze
+          </button>
           {nodes.map((row, rowID) => (
             <div key={rowID} className="row">
               {row.map((node, nodeID) => (
                 <button
                   key={nodeID}
                   className="column"
-                  onClick={() => this.displayData(node)}
+                  onMouseDown={() => this.handleNodeClick(node)}
                 >
                   <Node
                     class="Node"
-                    className={this.state.nodeType}
                     column={node.column}
                     row={node.row}
                     isStart={node.isStart}

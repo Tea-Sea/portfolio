@@ -22,3 +22,7 @@
   background-color: black;
   color: white;
 }
+
+.traversed {
+  background-color: cyan;
+}

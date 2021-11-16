@@ -9,7 +9,7 @@ export default class Node extends Component {
     this.state = {
       node: this.determineColour(props),
     };
-    this.determineColour(props);
+    //this.determineColour(props);
   }
 
   determineColour(props) {
@@ -19,14 +19,33 @@ export default class Node extends Component {
     if (props.isEnd) {
       return "end";
     }
+    if (props.traversed) {
+      return "traversed";
+    }
     return "node";
   }
 
   render() {
-    const { column, row, isStart, isEnd, isWall, isWalkable, neighbours } =
-      this.props;
+    const {
+      column,
+      row,
+      isStart,
+      isEnd,
+      isWall,
+      isWalkable,
+      neighbours,
+      traversed,
+    } = this.props;
 
-    const nodeType = isEnd ? "end" : isStart ? "start" : isWall ? "wall" : "";
+    const nodeType = isEnd
+      ? "end"
+      : isStart
+      ? "start"
+      : isWall
+      ? "wall"
+      : traversed
+      ? "traversed"
+      : "";
 
     return (
       <div className={"node " + nodeType}>
