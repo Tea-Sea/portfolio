@@ -30,7 +30,3 @@ input[type="reset"] {
   cursor: pointer;
   outline: inherit;
 }
-
-.selected {
-  background-color: yellow;
-}

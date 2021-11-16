@@ -12,8 +12,8 @@ const COL_LENGTH = 20;
 const ROW_START = 2;
 const COL_START = 5;
 
-const ROW__END = 19;
-const COL_END = 19;
+const ROW__END = 15;
+const COL_END = 15;
 
 export default class visualiser extends Component {
   constructor(props) {
@@ -28,22 +28,36 @@ export default class visualiser extends Component {
   }
 
   handleNodeClick(node) {
-    node.isWall = !node.isWall;
-    console.log("CLICK");
+    if (!(node.isStart || node.isEnd)) {
+      node.isWall = !node.isWall;
+      console.log(node.isStart, node.isEnd);
+    }
     this.displayData(node);
   }
 
   // UNUSED
   determineType(node) {
-    console.log("DETERMINE TYPE");
     if (node.isStart) {
       this.setState({ nodeType: "start" });
     }
     if (node.isEnd) {
       this.setState({ nodeType: "end" });
-      console.log("MADE IT");
     }
     this.setState({ nodeType: "node" });
+  }
+
+  generateMaze(algorithm, grid, rows, columns) {
+    switch (algorithm) {
+      case 0:
+        randomiser(grid, rows, columns);
+        break;
+      case 1:
+        break;
+      default:
+        console.log("Error choosing Maze Generation Algorithm");
+        return;
+    }
+    this.setState({ nodes: grid });
   }
 
   displayData(node) {
@@ -79,7 +93,7 @@ export default class visualiser extends Component {
         <div className="grid">
           <button
             className="randomise"
-            onClick={() => randomiser(nodes, ROW_LENGTH, COL_LENGTH)}
+            onClick={() => this.generateMaze(0, nodes, ROW_LENGTH, COL_LENGTH)}
           >
             Generate Maze
           </button>

@@ -11,16 +11,17 @@
   border: 3px solid black;
 }
 
+.wall {
+  background-color: black;
+  color: white;
+}
+
 .start {
   background-color: green;
 }
 
 .end {
   background-color: red;
-}
-.wall {
-  background-color: black;
-  color: white;
 }
 
 .traversed {
