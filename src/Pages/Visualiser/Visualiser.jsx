@@ -4,6 +4,8 @@ import Node from "./Node/Node";
 
 import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
 
+import { astar } from "./Algorithms/Pathfinding/astar";
+
 import "./Visualiser.css";
 
 const ROW_LENGTH = 20;
@@ -35,17 +37,6 @@ export default class visualiser extends Component {
     this.displayData(node);
   }
 
-  // UNUSED
-  determineType(node) {
-    if (node.isStart) {
-      this.setState({ nodeType: "start" });
-    }
-    if (node.isEnd) {
-      this.setState({ nodeType: "end" });
-    }
-    this.setState({ nodeType: "node" });
-  }
-
   generateMaze(algorithm, grid, rows, columns) {
     switch (algorithm) {
       case 0:
@@ -60,8 +51,10 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
-  executeAStar(grid, rows, columns) {
+  findPath(algorithm, grid, rows, columns) {
     console.log("Path");
+    astar(grid, rows, columns);
+    this.setState({ nodes: grid });
   }
 
   displayData(node) {
@@ -104,7 +97,7 @@ export default class visualiser extends Component {
           </button>
           <button
             className="pathfind"
-            onClick={() => this.executeAStar(nodes, ROW_LENGTH, COL_LENGTH)}
+            onClick={() => this.findPath(0, nodes, ROW_LENGTH, COL_LENGTH)}
           >
             A*
           </button>
