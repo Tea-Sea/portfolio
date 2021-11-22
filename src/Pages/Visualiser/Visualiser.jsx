@@ -52,7 +52,6 @@ export default class visualiser extends Component {
   }
 
   findPath(algorithm, grid, rows, columns) {
-    console.log("Path");
     astar(grid, rows, columns);
     this.setState({ nodes: grid });
   }

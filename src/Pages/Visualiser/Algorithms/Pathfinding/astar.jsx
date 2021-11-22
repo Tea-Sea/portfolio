@@ -1,10 +1,60 @@
-//astar algorithm
-
+// Astar algorithm
 export function astar(grid, rows, columns) {
-  console.log("test");
-  var selectedNode = determineStartNode(grid, rows, columns);
+  let solved = false;
+  let currentNode = determineStartNode(grid, rows, columns);
   const endNode = determineEndNode(grid, rows, columns);
-  determineHeuristic(selectedNode, endNode);
+  currentNode.g = 0;
+  currentNode.h = heuristic(currentNode, endNode);
+  currentNode.f = currentNode.g + currentNode.h;
+  var openSet = [];
+  let fail = 0;
+
+  while (!solved) {
+    let nextNode = currentNode;
+    // Generate node attributes
+    for (var j = 0; j < currentNode.neighbours.length; j++) {
+      checkWalkable(currentNode, currentNode.neighbours[j]);
+      currentNode.neighbours[j].g = currentNode.g + 1;
+      currentNode.neighbours[j].h = heuristic(
+        currentNode.neighbours[j],
+        endNode
+      );
+      currentNode.neighbours[j].f =
+        currentNode.neighbours[j].g + currentNode.neighbours[j].h;
+      // Add viable nodes to open set
+      if (
+        !openSet.includes(currentNode.neighbours[j]) &&
+        !currentNode.neighbours[j].traversed
+      ) {
+        openSet.push(currentNode.neighbours[j]);
+      }
+    }
+    // Pick best node from open set
+    for (var i = 0; i < openSet.length; i++) {
+      if (openSet[i].f < currentNode.f) {
+        nextNode = openSet[i];
+        currentNode.traversed = true;
+        openSet.pop(currentNode);
+      }
+    }
+    currentNode = nextNode;
+    if (currentNode === endNode) solved = true;
+    fail++;
+    //console.log(openSet);
+    if (fail > 30) solved = true;
+  }
+}
+
+function heuristic(node, destination) {
+  // Calculate the Manhattan distance from node to destination
+  return (
+    Math.abs(node.column - destination.column) +
+    Math.abs(node.row - destination.row)
+  );
+}
+
+function checkWalkable(node, destination) {
+  // TODO: implement check for diagonal walls
 }
 
 function determineStartNode(grid, rows, columns) {
@@ -27,12 +77,4 @@ function determineEndNode(grid, rows, columns) {
     }
   }
   console.error("No endpoint set");
-}
-
-function determineHeuristic(node, destination) {
-  // Calculate the Manhattan distance from node to destination
-  const dist =
-    Math.abs(node.column - destination.column) +
-    Math.abs(node.row - destination.row);
-  console.log(dist);
 }
