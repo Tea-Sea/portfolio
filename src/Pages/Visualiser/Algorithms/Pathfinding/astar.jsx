@@ -7,14 +7,19 @@ export function astar(grid, rows, columns) {
   currentNode.h = heuristic(currentNode, endNode);
   currentNode.f = currentNode.g + currentNode.h;
   var openSet = [];
-  let fail = 0;
 
   while (!solved) {
     let nextNode = currentNode;
     // Generate node attributes
     for (var j = 0; j < currentNode.neighbours.length; j++) {
       checkWalkable(currentNode, currentNode.neighbours[j]);
-      currentNode.neighbours[j].g = currentNode.g + 1;
+      getNodeAttributes(currentNode.neighbours.j, currentNode.g);
+      if (j < 4) {
+        currentNode.neighbours[j].g = currentNode.g + 1;
+      } else {
+        currentNode.neighbours[j].g = currentNode.g + 1.41;
+      }
+
       currentNode.neighbours[j].h = heuristic(
         currentNode.neighbours[j],
         endNode
@@ -27,21 +32,22 @@ export function astar(grid, rows, columns) {
         !currentNode.neighbours[j].traversed
       ) {
         openSet.push(currentNode.neighbours[j]);
+        console.log(currentNode.neighbours[j]);
       }
     }
     // Pick best node from open set
     for (var i = 0; i < openSet.length; i++) {
-      if (openSet[i].f < currentNode.f) {
+      if (openSet[i].f <= currentNode.f) {
         nextNode = openSet[i];
         currentNode.traversed = true;
-        openSet.pop(currentNode);
+        //openSet.pop(currentNode);
       }
     }
     currentNode = nextNode;
-    if (currentNode === endNode) solved = true;
-    fail++;
-    //console.log(openSet);
-    if (fail > 30) solved = true;
+    if (currentNode === endNode) {
+      console.log("solved");
+      solved = true;
+    }
   }
 }
 
@@ -52,6 +58,8 @@ function heuristic(node, destination) {
     Math.abs(node.row - destination.row)
   );
 }
+
+function getNodeAttributes(node, currentG) {}
 
 function checkWalkable(node, destination) {
   // TODO: implement check for diagonal walls
