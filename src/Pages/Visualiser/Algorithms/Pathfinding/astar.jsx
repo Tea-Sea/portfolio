@@ -17,7 +17,7 @@ export function astar(grid, rows, columns) {
       if (j < 4) {
         currentNode.neighbours[j].g = currentNode.g + 1;
       } else {
-        currentNode.neighbours[j].g = currentNode.g + 1.41;
+        currentNode.neighbours[j].g = currentNode.g + 1;
       }
 
       currentNode.neighbours[j].h = heuristic(
@@ -32,7 +32,6 @@ export function astar(grid, rows, columns) {
         !currentNode.neighbours[j].traversed
       ) {
         openSet.push(currentNode.neighbours[j]);
-        console.log(currentNode.neighbours[j]);
       }
     }
     // Pick best node from open set

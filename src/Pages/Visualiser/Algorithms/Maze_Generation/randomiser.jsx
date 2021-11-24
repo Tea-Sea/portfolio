@@ -13,7 +13,5 @@ function determineWall(node, density) {
   const rand = Math.random();
   if (rand < density && !(node.isStart || node.isEnd)) {
     node.isWall = true;
-  } else {
-    node.isWall = false;
   }
 }

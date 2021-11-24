@@ -38,6 +38,7 @@ export default class visualiser extends Component {
   }
 
   generateMaze(algorithm, grid, rows, columns) {
+    this.clearGrid(grid, false);
     switch (algorithm) {
       case 0:
         randomiser(grid, rows, columns);
@@ -52,7 +53,29 @@ export default class visualiser extends Component {
   }
 
   findPath(algorithm, grid, rows, columns) {
-    astar(grid, rows, columns);
+    this.clearGrid(grid, true);
+    switch (algorithm) {
+      case 0:
+        astar(grid, rows, columns);
+        break;
+      case 1:
+        break;
+      default:
+        console.log("Error choosing Path Finding Algorithm");
+        return;
+    }
+    this.setState({ nodes: grid });
+  }
+
+  clearGrid(grid, keepWalls) {
+    for (var i = 0; i < ROW_LENGTH; i++) {
+      for (var j = 0; j < COL_LENGTH; j++) {
+        if (!keepWalls) {
+          grid[i][j].isWall = false;
+        }
+        grid[i][j].traversed = false;
+      }
+    }
     this.setState({ nodes: grid });
   }
 

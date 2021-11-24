@@ -1,11 +1,11 @@
 * {
   text-align: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .node:hover {
   background-color: yellow;
   color: black;
-  transition: background-color 0.5s ease, color 0.5s ease;
 }
 .node {
   border: 3px solid black;
