@@ -100,7 +100,13 @@ export default class visualiser extends Component {
       " T: " +
       node.traversed +
       " Neighbours: " +
-      neighbourData;
+      neighbourData +
+      " F: " +
+      node.f +
+      " G: " +
+      node.g +
+      " H: " +
+      node.h;
     //console.log(node.neighbours);
     this.setState({ selectedNodeData: data });
   }
@@ -180,7 +186,6 @@ const generateNode = (column, row) => {
     isStart: column === COL_START && row === ROW_START,
     isEnd: column === COL_END && row === ROW__END,
     isWall: column === 9 && row === 8,
-    isWalkable: true,
     traversed: false,
     neighbours: [],
   };
