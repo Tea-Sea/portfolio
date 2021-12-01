@@ -12,18 +12,19 @@ export default class Node extends Component {
   }
 
   render() {
-    const { column, row, isStart, isEnd, isWall, traversed } = this.props;
-
+    const { column, row, isStart, isEnd, isWall, traversed, selected } =
+      this.props;
     const nodeType = isEnd
       ? "end"
       : isStart
       ? "start"
       : isWall
       ? "wall"
+      : selected
+      ? "selected"
       : traversed
       ? "traversed"
       : "";
-
     return (
       <div className={"node " + nodeType}>
         {column},{row}

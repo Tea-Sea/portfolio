@@ -1,98 +1,93 @@
 // Astar algorithm
 
-const DIAGONAL_WIEGHT = 1.4;
+const DIAGONAL_WIEGHT = Math.SQRT2;
 const PERPENDICULAR_WIEGHT = 1;
 
 export function astar(grid, rows, columns) {
-  let solved = false;
+  var solved = false;
   let currentNode = determineStartNode(grid, rows, columns);
   const endNode = determineEndNode(grid, rows, columns);
   currentNode.g = 0;
   currentNode.h = heuristic(currentNode, endNode);
-  currentNode.f = currentNode.g + currentNode.h;
+  currentNode.f = currentNode.g + currentNode.h + 1;
   var openSet = [];
   var closedSet = [];
-  let nextNode = currentNode;
+  var lowestFValue = 100;
   let failsafe = 0;
-  while (!solved) {
-    //console.log(currentNode);
+  openSet.push(currentNode);
 
-    // Generate node attributes
-    for (var j = 0; j < currentNode.neighbours.length; j++) {
-      checkWalkable(currentNode, currentNode.neighbours[j]);
-
-      // Add viable nodes to open set
-      if (
-        !closedSet.includes(currentNode.neighbours[j]) &&
-        currentNode.neighbours[j].isWalkable
-      ) {
-        let tentativeG = currentNode.g + DIAGONAL_WIEGHT;
-        if (j < 4) tentativeG = currentNode.g + PERPENDICULAR_WIEGHT;
-        let newPath = false;
-        if (openSet.includes(currentNode.neighbours[j])) {
-          if (tentativeG < currentNode.neighbours[j].g) {
-            currentNode.neighbours[j].g = tentativeG;
-            newPath = true;
-          }
-        } else {
-          currentNode.neighbours[j].g = tentativeG;
-          newPath = true;
-          openSet.push(currentNode.neighbours[j]);
-        }
-        if (newPath) {
-          currentNode.neighbours[j].h = heuristic(
-            currentNode.neighbours[j],
-            endNode
-          );
-          currentNode.neighbours[j].f =
-            currentNode.neighbours[j].g + currentNode.neighbours[j].h;
-          currentNode.neighbours[j].parent = currentNode;
-        }
+  do {
+    // Find value in  the openset with lowest F value
+    for (let i = 0; i < openSet.length; i++) {
+      if (openSet[i].f < lowestFValue) {
+        lowestFValue = openSet[i].f;
+        currentNode = openSet[i];
       }
+      console.log(lowestFValue, openSet[i].f);
     }
-    //choosenode
-    // Pick best node from open set
-    //console.log(openSet.length);
-    for (var i = 0; i < openSet.length; i++) {
-      if (openSet[i].f <= currentNode.f) {
-        nextNode = openSet[i];
+    lowestFValue = 100;
+    // Remove node with lowest F value from the openSet
+    openSet.splice(openSet.indexOf(currentNode), 1);
+    // Add that same node to the closedSet
+    closedSet.push(currentNode);
 
-        //openSet.splice(i, 1);
-      }
-      //console.log(openSet[i]);
-      if (openSet[i]) openSet[i].traversed = true;
-    }
-    if (!closedSet.includes(currentNode)) {
-      closedSet.push(currentNode);
-    }
-    openSet.splice(openSet.indexOf(nextNode), 1);
-    currentNode = nextNode;
-    for (var p = 0; p < closedSet.length; p++) {
-      closedSet[p].isWall = true;
-    }
     if (currentNode === endNode) {
       console.log("solved");
-      console.log("CLOSED SET", closedSet.length, closedSet);
       solved = true;
+    } else {
+      // GENERATE EACH SUCCESSOR NODE
+      // Generate node attributes
+      for (let j = 0; j < currentNode.neighbours.length; j++) {
+        var nextNode = currentNode.neighbours[j];
+        checkWalkable(currentNode, nextNode);
+        nextNode.parent = currentNode;
+
+        // If neighbour node is not in the closed set and is walkable
+        if (!closedSet.includes(nextNode) && nextNode.isWalkable) {
+          // If the neighbour is in the openSet
+          if (openSet.includes(nextNode)) {
+            //Determine it's score and compare it to it's previous score
+            let tentativeF =
+              determineGValue(currentNode, nextNode) + nextNode.h;
+            // If it's new score is better, assign it this new score and update it's parent
+            if (tentativeF < nextNode.f) {
+              nextNode.f = tentativeF;
+              nextNode.parent = currentNode;
+            }
+          } else {
+            //If the neighbour is not in the openSet, determine its score and add it to the openSet.
+            nextNode.g = determineGValue(currentNode, nextNode);
+            nextNode.h = heuristic(nextNode, endNode);
+            nextNode.f = nextNode.g + nextNode.h;
+            nextNode.parent = currentNode;
+            openSet.push(nextNode);
+          }
+        }
+      }
     }
     failsafe++;
     if (failsafe > 150) {
-      console.log("CLOSED SET", closedSet.length, closedSet);
+      //console.log("CLOSED SET", closedSet.length, closedSet);
+      //console.log("OPEN SET", openSet.length, openSet);
       solved = true;
-      console.log("failed");
+      console.log("failed", failsafe);
     }
+  } while (!(solved || openSet.length === 0));
+  for (let i = 0; i < closedSet.length; i++) {
+    closedSet[i].selected = true;
+  }
+
+  for (let i = 0; i < openSet.length; i++) {
+    openSet[i].traversed = true;
   }
 }
 
-function getNodeAttributes(count, node, currentG, endNode) {
-  if (count < 4) {
-    if (node.g) node.g = currentG + 1;
+function determineGValue(current, neighbour) {
+  if (current.column === neighbour.column || current.row === neighbour.row) {
+    return current.g + PERPENDICULAR_WIEGHT;
   } else {
-    node.g = currentG + 1.4;
+    return current.g + DIAGONAL_WIEGHT;
   }
-
-  node.h = heuristic(node, endNode);
-  node.f = node.g + node.h;
 }
 
 function checkWalkable(node, destination) {
@@ -130,8 +125,10 @@ function determineEndNode(grid, rows, columns) {
 
 function heuristic(node, destination) {
   // Calculate the Manhattan distance from node to destination
+  let dx = Math.abs(node.column - destination.column);
+  let dy = Math.abs(node.row - destination.row);
   return (
-    Math.abs(node.column - destination.column) +
-    Math.abs(node.row - destination.row)
+    PERPENDICULAR_WIEGHT * (dx + dy) +
+    (DIAGONAL_WIEGHT - 2 * PERPENDICULAR_WIEGHT) * Math.min(dx, dy)
   );
 }

@@ -24,6 +24,10 @@
   background-color: red;
 }
 
+.selected {
+  background-color: yellow;
+}
+
 .traversed {
   background-color: blue;
 }

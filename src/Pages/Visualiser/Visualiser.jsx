@@ -11,8 +11,8 @@ import "./Visualiser.css";
 const ROW_LENGTH = 20;
 const COL_LENGTH = 20;
 
-const ROW_START = 2;
-const COL_START = 5;
+const ROW_START = 0;
+const COL_START = 0;
 
 const ROW__END = 15;
 const COL_END = 15;
@@ -74,6 +74,7 @@ export default class visualiser extends Component {
           grid[i][j].isWall = false;
         }
         grid[i][j].traversed = false;
+        grid[i][j].selected = false;
       }
     }
     this.setState({ nodes: grid });
@@ -87,20 +88,21 @@ export default class visualiser extends Component {
         (neighbourData += "(" + neighbour.column + "," + neighbour.row + ") ")
     );
     const data =
-      "Column: " +
+      "[" +
       node.column +
-      " Row: " +
+      "," +
       node.row +
-      " Start: " +
-      node.isStart +
-      " End: " +
-      node.isEnd +
-      " W: " +
-      node.isWall +
-      " T: " +
-      node.traversed +
-      " Neighbours: " +
-      neighbourData +
+      "] " +
+      // " Start: " +
+      // node.isStart +
+      // " End: " +
+      // node.isEnd +
+      // " W: " +
+      // node.isWall +
+      // " T: " +
+      // node.traversed +
+      // " Neighbours: " +
+      // neighbourData +
       " F: " +
       node.f +
       " G: " +
@@ -144,6 +146,7 @@ export default class visualiser extends Component {
                     isStart={node.isStart}
                     isEnd={node.isEnd}
                     isWall={node.isWall}
+                    selected={node.selected}
                     traversed={node.traversed}
                   ></Node>
                 </button>
@@ -185,8 +188,9 @@ const generateNode = (column, row) => {
     row: row,
     isStart: column === COL_START && row === ROW_START,
     isEnd: column === COL_END && row === ROW__END,
-    isWall: column === 9 && row === 8,
+    isWall: (column === 9 && row === 8) || (column === 8 && row === 8),
     traversed: false,
+    selected: false,
     neighbours: [],
   };
 };
