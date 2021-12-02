@@ -12,19 +12,11 @@ export function astar(grid, rows, columns) {
   currentNode.f = currentNode.g + currentNode.h + 1;
   var openSet = [];
   var closedSet = [];
-  var lowestFValue = 100;
-  let failsafe = 0;
   openSet.push(currentNode);
 
   do {
     // Find value in  the openset with lowest F value
-    for (let i = 0; i < openSet.length; i++) {
-      if (openSet[i].f < lowestFValue) {
-        lowestFValue = openSet[i].f;
-        currentNode = openSet[i];
-      }
-    }
-    lowestFValue = 100;
+    currentNode = getLowestFNode(openSet);
     // Remove node with lowest F value from the openSet
     openSet.splice(openSet.indexOf(currentNode), 1);
     // Add that same node to the closedSet
@@ -34,46 +26,40 @@ export function astar(grid, rows, columns) {
       console.log("solved");
       solved = true;
     } else {
-      // GENERATE EACH SUCCESSOR NODE
+      checkWalkableNeighbours(currentNode, currentNode.neighbours);
       // Generate node attributes
       for (let j = 0; j < currentNode.neighbours.length; j++) {
-        var nextNode = currentNode.neighbours[j];
-        checkWalkable(currentNode, nextNode);
-        //nextNode.parent = currentNode;
-
+        var neighbour = currentNode.neighbours[j];
         // If neighbour node is not in the closed set and is walkable
-        if (!closedSet.includes(nextNode) && nextNode.isWalkable) {
+        if (!closedSet.includes(neighbour) && neighbour.isWalkable) {
           // If the neighbour is in the openSet
-          if (openSet.includes(nextNode)) {
+          if (openSet.includes(neighbour)) {
             //Determine it's score and compare it to it's previous score
             let tentativeF =
-              determineGValue(currentNode, nextNode) + nextNode.h;
+              determineGValue(currentNode, neighbour) + neighbour.h;
             // If it's new score is better, assign it this new score and update it's parent
-            if (tentativeF < nextNode.f) {
-              nextNode.f = tentativeF;
-              nextNode.parent = currentNode;
+            if (tentativeF < neighbour.f) {
+              neighbour.f = tentativeF;
+              neighbour.parent = currentNode;
             }
           } else {
             //If the neighbour is not in the openSet, determine its score and add it to the openSet.
-            nextNode.g = determineGValue(currentNode, nextNode);
-            nextNode.h = heuristic(nextNode, endNode);
-            nextNode.f = nextNode.g + nextNode.h;
-            nextNode.parent = currentNode;
-            openSet.push(nextNode);
+            neighbour.g = determineGValue(currentNode, neighbour);
+            neighbour.h = heuristic(neighbour, endNode);
+            neighbour.f = neighbour.g + neighbour.h;
+            neighbour.parent = currentNode;
+            openSet.push(neighbour);
           }
         }
       }
     }
-    failsafe++;
-    if (failsafe > 150) {
-      solved = true;
-      console.log("failed", failsafe);
-    }
   } while (!(solved || openSet.length === 0));
+
+  // TODO: Do this in the visualiser
   for (let i = 0; i < closedSet.length; i++) {
     closedSet[i].selected = true;
   }
-
+  // TODO: Do this in the visualiser
   for (let i = 0; i < openSet.length; i++) {
     openSet[i].traversed = true;
   }
@@ -87,8 +73,18 @@ function determineGValue(current, neighbour) {
   }
 }
 
-function checkWalkable(node, destination) {
+function checkWalkableNeighbours(node) {
   // TODO: implement check for diagonal walls
+
+  // if same row has wall, check to see if same column have wall, intersect = unwalkable
+
+  for (let i = 0; i < node.neighbours.length; i++) {
+    if (node.neighbours[i].iswall) {
+      if (node.neighbours[i].row === node.row) {
+      }
+    }
+  }
+
   node.neighbours.forEach((neighbour) => {
     if (neighbour.isWall) {
       neighbour.isWalkable = false;
@@ -130,12 +126,26 @@ function heuristic(node, destination) {
   );
 }
 
+function getLowestFNode(openSet) {
+  let lowestFValue = openSet[0].f + 1;
+  let result;
+  for (var i = 0; i < openSet.length; i++) {
+    if (openSet[i].f < lowestFValue) {
+      lowestFValue = openSet[i].f;
+      result = openSet[i];
+    }
+  }
+  return result;
+}
+
 export function shortestPathResult(startNode, endNode) {
   const result = [];
   let currentNode = endNode;
-  while (currentNode !== startNode) {
-    result.push(currentNode);
-    currentNode = currentNode.parent;
+  if (currentNode.parent) {
+    while (currentNode !== startNode) {
+      result.push(currentNode);
+      currentNode = currentNode.parent;
+    }
   }
   return result;
 }

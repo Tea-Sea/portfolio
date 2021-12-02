@@ -53,11 +53,12 @@ export default class visualiser extends Component {
   }
 
   findPath(algorithm, grid, rows, columns) {
+    let shortestPath = [];
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
         astar(grid, rows, columns);
-        const shortestPath = shortestPathResult(
+        shortestPath = shortestPathResult(
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
         );
@@ -84,6 +85,7 @@ export default class visualiser extends Component {
         grid[i][j].traversed = false;
         grid[i][j].selected = false;
         grid[i][j].isPath = false;
+        grid[i][j].parent = undefined;
       }
     }
     this.setState({ nodes: grid });
