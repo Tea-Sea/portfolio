@@ -23,7 +23,6 @@ export function astar(grid, rows, columns) {
         lowestFValue = openSet[i].f;
         currentNode = openSet[i];
       }
-      console.log(lowestFValue, openSet[i].f);
     }
     lowestFValue = 100;
     // Remove node with lowest F value from the openSet
@@ -40,7 +39,7 @@ export function astar(grid, rows, columns) {
       for (let j = 0; j < currentNode.neighbours.length; j++) {
         var nextNode = currentNode.neighbours[j];
         checkWalkable(currentNode, nextNode);
-        nextNode.parent = currentNode;
+        //nextNode.parent = currentNode;
 
         // If neighbour node is not in the closed set and is walkable
         if (!closedSet.includes(nextNode) && nextNode.isWalkable) {
@@ -67,8 +66,6 @@ export function astar(grid, rows, columns) {
     }
     failsafe++;
     if (failsafe > 150) {
-      //console.log("CLOSED SET", closedSet.length, closedSet);
-      //console.log("OPEN SET", openSet.length, openSet);
       solved = true;
       console.log("failed", failsafe);
     }
@@ -124,11 +121,21 @@ function determineEndNode(grid, rows, columns) {
 }
 
 function heuristic(node, destination) {
-  // Calculate the Manhattan distance from node to destination
+  // Calculate the diagonal distance from node to destination
   let dx = Math.abs(node.column - destination.column);
   let dy = Math.abs(node.row - destination.row);
   return (
     PERPENDICULAR_WIEGHT * (dx + dy) +
     (DIAGONAL_WIEGHT - 2 * PERPENDICULAR_WIEGHT) * Math.min(dx, dy)
   );
+}
+
+export function shortestPathResult(startNode, endNode) {
+  const result = [];
+  let currentNode = endNode;
+  while (currentNode !== startNode) {
+    result.push(currentNode);
+    currentNode = currentNode.parent;
+  }
+  return result;
 }

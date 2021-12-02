@@ -4,7 +4,7 @@ import Node from "./Node/Node";
 
 import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
 
-import { astar } from "./Algorithms/Pathfinding/astar";
+import { astar, shortestPathResult } from "./Algorithms/Pathfinding/astar";
 
 import "./Visualiser.css";
 
@@ -53,10 +53,16 @@ export default class visualiser extends Component {
   }
 
   findPath(algorithm, grid, rows, columns) {
+    let shortestPath = [];
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
         astar(grid, rows, columns);
+        shortestPath = shortestPathResult(
+          grid[COL_START][ROW_START],
+          grid[COL_END][ROW__END]
+        );
+        console.log(shortestPath);
         break;
       case 1:
         break;
@@ -103,14 +109,14 @@ export default class visualiser extends Component {
       // node.traversed +
       // " Neighbours: " +
       // neighbourData +
-      " F: " +
-      node.f +
-      " G: " +
-      node.g +
-      " H: " +
-      node.h;
-    //console.log(node.neighbours);
-    this.setState({ selectedNodeData: data });
+      // " F: " +
+      // node.f +
+      // " G: " +
+      // node.g +
+      // " H: " +
+      // node.h;
+      //console.log(node.neighbours);
+      this.setState({ selectedNodeData: data });
   }
 
   render() {
