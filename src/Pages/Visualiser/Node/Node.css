@@ -24,6 +24,10 @@
   background-color: red;
 }
 
+.path {
+  background-color: gray;
+}
+
 .selected {
   background-color: yellow;
 }

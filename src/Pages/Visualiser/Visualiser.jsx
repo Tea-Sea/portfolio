@@ -53,16 +53,18 @@ export default class visualiser extends Component {
   }
 
   findPath(algorithm, grid, rows, columns) {
-    let shortestPath = [];
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
         astar(grid, rows, columns);
-        shortestPath = shortestPathResult(
+        const shortestPath = shortestPathResult(
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
         );
-        console.log(shortestPath);
+        while (shortestPath.length > 0) {
+          shortestPath[shortestPath.length - 1].isPath = true;
+          shortestPath.pop(shortestPath.length);
+        }
         break;
       case 1:
         break;
@@ -81,6 +83,7 @@ export default class visualiser extends Component {
         }
         grid[i][j].traversed = false;
         grid[i][j].selected = false;
+        grid[i][j].isPath = false;
       }
     }
     this.setState({ nodes: grid });
@@ -93,30 +96,25 @@ export default class visualiser extends Component {
       (neighbour) =>
         (neighbourData += "(" + neighbour.column + "," + neighbour.row + ") ")
     );
-    const data =
-      "[" +
-      node.column +
-      "," +
-      node.row +
-      "] " +
-      // " Start: " +
-      // node.isStart +
-      // " End: " +
-      // node.isEnd +
-      // " W: " +
-      // node.isWall +
-      // " T: " +
-      // node.traversed +
-      // " Neighbours: " +
-      // neighbourData +
-      // " F: " +
-      // node.f +
-      // " G: " +
-      // node.g +
-      // " H: " +
-      // node.h;
-      //console.log(node.neighbours);
-      this.setState({ selectedNodeData: data });
+    const data = "[" + node.column + "," + node.row + "] ";
+    // " Start: " +
+    // node.isStart +
+    // " End: " +
+    // node.isEnd +
+    // " W: " +
+    // node.isWall +
+    // " T: " +
+    // node.traversed +
+    // " Neighbours: " +
+    // neighbourData +
+    // " F: " +
+    // node.f +
+    // " G: " +
+    // node.g +
+    // " H: " +
+    // node.h;
+    //console.log(node.neighbours);
+    this.setState({ selectedNodeData: data });
   }
 
   render() {
@@ -152,6 +150,7 @@ export default class visualiser extends Component {
                     isStart={node.isStart}
                     isEnd={node.isEnd}
                     isWall={node.isWall}
+                    isPath={node.isPath}
                     selected={node.selected}
                     traversed={node.traversed}
                   ></Node>

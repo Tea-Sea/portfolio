@@ -12,7 +12,7 @@ export default class Node extends Component {
   }
 
   render() {
-    const { column, row, isStart, isEnd, isWall, traversed, selected } =
+    const { column, row, isStart, isEnd, isWall, traversed, selected, isPath } =
       this.props;
     const nodeType = isEnd
       ? "end"
@@ -20,6 +20,8 @@ export default class Node extends Component {
       ? "start"
       : isWall
       ? "wall"
+      : isPath
+      ? "path"
       : selected
       ? "selected"
       : traversed
