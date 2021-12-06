@@ -26,12 +26,15 @@ export function astar(grid, rows, columns) {
       console.log("solved");
       solved = true;
     } else {
-      checkWalkableNeighbours(currentNode, currentNode.neighbours);
       // Generate node attributes
       for (let j = 0; j < currentNode.neighbours.length; j++) {
         var neighbour = currentNode.neighbours[j];
+
         // If neighbour node is not in the closed set and is walkable
-        if (!closedSet.includes(neighbour) && neighbour.isWalkable) {
+        if (
+          !closedSet.includes(neighbour) &&
+          isNeighbourWalkable(grid, currentNode, neighbour)
+        ) {
           // If the neighbour is in the openSet
           if (openSet.includes(neighbour)) {
             //Determine it's score and compare it to it's previous score
@@ -73,25 +76,22 @@ function determineGValue(current, neighbour) {
   }
 }
 
-function checkWalkableNeighbours(node) {
-  // TODO: implement check for diagonal walls
-
-  // if same row has wall, check to see if same column have wall, intersect = unwalkable
-
-  for (let i = 0; i < node.neighbours.length; i++) {
-    if (node.neighbours[i].iswall) {
-      if (node.neighbours[i].row === node.row) {
-      }
+function isNeighbourWalkable(grid, node, neighbour) {
+  let walkable = true;
+  if (neighbour.isWall) {
+    walkable = false;
+  } else {
+    walkable = true;
+  }
+  if (!(node.column === neighbour.column || node.row === neighbour.row)) {
+    if (
+      grid[neighbour.row][node.column].isWall &&
+      grid[node.row][neighbour.column].isWall
+    ) {
+      walkable = false;
     }
   }
-
-  node.neighbours.forEach((neighbour) => {
-    if (neighbour.isWall) {
-      neighbour.isWalkable = false;
-    } else {
-      neighbour.isWalkable = true;
-    }
-  });
+  return walkable;
 }
 
 function determineStartNode(grid, rows, columns) {
