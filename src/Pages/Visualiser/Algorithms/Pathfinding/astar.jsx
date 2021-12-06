@@ -81,15 +81,13 @@ function isNeighbourWalkable(grid, node, neighbour) {
   if (neighbour.isWall) {
     walkable = false;
   } else {
-    walkable = true;
-  }
-  if (!(node.column === neighbour.column || node.row === neighbour.row)) {
-    if (
-      grid[neighbour.row][node.column].isWall &&
-      grid[node.row][neighbour.column].isWall
-    ) {
-      walkable = false;
-    }
+    // Check special case of diagonal walls closing off path to neighbouring node
+    if (!(node.column === neighbour.column || node.row === neighbour.row)) {
+      walkable = !(
+        grid[neighbour.row][node.column].isWall &&
+        grid[node.row][neighbour.column].isWall
+      );
+    } else walkable = true;
   }
   return walkable;
 }
