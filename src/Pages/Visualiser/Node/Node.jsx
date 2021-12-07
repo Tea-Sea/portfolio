@@ -12,7 +12,7 @@ export default class Node extends Component {
   }
 
   render() {
-    const { column, row, isStart, isEnd, isWall, traversed, selected, isPath } =
+    const { column, row, isStart, isEnd, isWall, closed, open, isPath } =
       this.props;
     const nodeType = isEnd
       ? "end"
@@ -22,10 +22,10 @@ export default class Node extends Component {
       ? "wall"
       : isPath
       ? "path"
-      : selected
-      ? "selected"
-      : traversed
-      ? "traversed"
+      : closed
+      ? "closed"
+      : open
+      ? "open"
       : "";
     return (
       <div id={`${column},${row}`} className={"node " + nodeType}>

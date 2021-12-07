@@ -28,10 +28,10 @@
   background-color: gray;
 }
 
-.selected {
+.closed {
   background-color: yellow;
 }
 
-.traversed {
+.open {
   background-color: blue;
 }

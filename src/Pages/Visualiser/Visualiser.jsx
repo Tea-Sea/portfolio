@@ -17,6 +17,8 @@ const COL_START = 0;
 const ROW__END = 15;
 const COL_END = 15;
 
+const ANIMATION_DELAY = 50;
+
 export default class visualiser extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +34,6 @@ export default class visualiser extends Component {
   handleNodeClick(node) {
     if (!(node.isStart || node.isEnd)) {
       node.isWall = !node.isWall;
-      // node.neighbours.forEach((neighbour) => (neighbour.traversed = true));
     }
     this.displayData(node);
   }
@@ -54,6 +55,8 @@ export default class visualiser extends Component {
 
   findPath(algorithm, grid, rows, columns) {
     let shortestPath = [];
+    let openSet = [];
+    let closedSet = [];
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
@@ -62,17 +65,7 @@ export default class visualiser extends Component {
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
         );
-        console.log(shortestPath);
-        for (let i = 0; i < shortestPath.length; i++) {
-          // shortestPath[i].isPath = true;
-          // console.log(shortestPath[i]);
-          // shortestPath.pop(shortestPath.length);
-
-          setTimeout(() => {
-            shortestPath[i].isPath = true;
-            this.setState({ nodes: grid });
-          }, 50 * i);
-        }
+        this.animate(grid, shortestPath, "path");
         break;
       case 1:
         break;
@@ -83,14 +76,52 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
+  animate(grid, nodes, nodeType) {
+    for (let i = 0; i < nodes.length; i++) {
+      switch (nodeType) {
+        case "wall":
+          setTimeout(() => {
+            nodes[i].isWall = true;
+            this.setState({ nodes: grid });
+          }, ANIMATION_DELAY * i);
+          break;
+        case "open":
+          setTimeout(() => {
+            nodes[i].open = true;
+            this.setState({ nodes: grid });
+          }, ANIMATION_DELAY * i);
+          break;
+        case "closed":
+          setTimeout(() => {
+            nodes[i].closed = true;
+            this.setState({ nodes: grid });
+          }, ANIMATION_DELAY * i);
+          break;
+        case "path":
+          setTimeout(() => {
+            nodes[i].isPath = true;
+            this.setState({ nodes: grid });
+          }, ANIMATION_DELAY * i);
+          break;
+        default:
+          break;
+      }
+
+      setTimeout(() => {
+        nodes[i].isPath = true;
+        this.setState({ nodes: grid });
+      }, 50 * i);
+    }
+  }
+
   clearGrid(grid, keepWalls) {
     for (var i = 0; i < ROW_LENGTH; i++) {
       for (var j = 0; j < COL_LENGTH; j++) {
         if (!keepWalls) {
           grid[i][j].isWall = false;
         }
-        grid[i][j].traversed = false;
-        grid[i][j].selected = false;
+        grid[i][j].open = false;
+        grid[i][j].closed = false;
         grid[i][j].isPath = false;
         grid[i][j].parent = undefined;
       }
@@ -112,17 +143,6 @@ export default class visualiser extends Component {
     // node.isEnd +
     // " W: " +
     // node.isWall +
-    // " T: " +
-    // node.traversed +
-    // " Neighbours: " +
-    // neighbourData +
-    // " F: " +
-    // node.f +
-    // " G: " +
-    // node.g +
-    // " H: " +
-    // node.h;
-    //console.log(node.neighbours);
     this.setState({ selectedNodeData: data });
   }
 
@@ -160,8 +180,8 @@ export default class visualiser extends Component {
                     isEnd={node.isEnd}
                     isWall={node.isWall}
                     isPath={node.isPath}
-                    selected={node.selected}
-                    traversed={node.traversed}
+                    closed={node.closed}
+                    open={node.open}
                   ></Node>
                 </button>
               ))}
@@ -202,9 +222,9 @@ const generateNode = (column, row) => {
     row: row,
     isStart: column === COL_START && row === ROW_START,
     isEnd: column === COL_END && row === ROW__END,
-    isWall: (column === 9 && row === 8) || (column === 8 && row === 8),
-    traversed: false,
-    selected: false,
+    isWall: false,
+    open: false,
+    closed: false,
     neighbours: [],
   };
 };

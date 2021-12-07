@@ -60,11 +60,11 @@ export function astar(grid, rows, columns) {
 
   // TODO: Do this in the visualiser
   for (let i = 0; i < closedSet.length; i++) {
-    closedSet[i].selected = true;
+    closedSet[i].closed = true;
   }
   // TODO: Do this in the visualiser
   for (let i = 0; i < openSet.length; i++) {
-    openSet[i].traversed = true;
+    openSet[i].open = true;
   }
 }
 
