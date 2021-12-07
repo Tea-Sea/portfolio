@@ -141,7 +141,7 @@ export function shortestPathResult(startNode, endNode) {
   let currentNode = endNode;
   if (currentNode.parent) {
     while (currentNode !== startNode) {
-      result.push(currentNode);
+      result.unshift(currentNode);
       currentNode = currentNode.parent;
     }
   }

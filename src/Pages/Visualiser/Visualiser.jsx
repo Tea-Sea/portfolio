@@ -62,9 +62,16 @@ export default class visualiser extends Component {
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
         );
-        while (shortestPath.length > 0) {
-          shortestPath[shortestPath.length - 1].isPath = true;
-          shortestPath.pop(shortestPath.length);
+        console.log(shortestPath);
+        for (let i = 0; i < shortestPath.length; i++) {
+          // shortestPath[i].isPath = true;
+          // console.log(shortestPath[i]);
+          // shortestPath.pop(shortestPath.length);
+
+          setTimeout(() => {
+            shortestPath[i].isPath = true;
+            this.setState({ nodes: grid });
+          }, 50 * i);
         }
         break;
       case 1:

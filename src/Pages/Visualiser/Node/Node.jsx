@@ -28,7 +28,7 @@ export default class Node extends Component {
       ? "traversed"
       : "";
     return (
-      <div className={"node " + nodeType}>
+      <div id={`${column},${row}`} className={"node " + nodeType}>
         {column},{row}
       </div>
     );
