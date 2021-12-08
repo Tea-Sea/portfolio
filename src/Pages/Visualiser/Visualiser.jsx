@@ -22,20 +22,13 @@ const ANIMATION_DELAY = 25;
 export default class visualiser extends Component {
   constructor(props) {
     super(props);
-    this.state = { nodes: [], selectedNodeData: "None" };
+    this.state = { nodes: [], selectedNodeData: "None", mousePressed: false };
   }
 
   componentDidMount() {
     const nodes = generateGrid();
     this.setState({ nodes }, () => {});
     //this.determineType(nodes);
-  }
-
-  handleNodeClick(node) {
-    if (!(node.isStart || node.isEnd)) {
-      node.isWall = !node.isWall;
-    }
-    this.displayData(node);
   }
 
   generateMaze(algorithm, grid, rows, columns) {
@@ -125,6 +118,40 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
+  handleNodeClick(node) {
+    console.log("clicked");
+    if (!(node.isStart || node.isEnd)) {
+      node.isWall = !node.isWall;
+    }
+    this.displayData(node);
+  }
+
+  handleNodeEnter(node, mouseDown) {
+    switch (mouseDown) {
+      case true:
+        if (!(node.isStart || node.isEnd)) {
+          node.isWall = !node.isWall;
+          console.log("TOGGLED");
+        }
+        break;
+      default:
+        console.log("hovered node ", node.column, node.row);
+        break;
+    }
+    this.displayData(node);
+  }
+
+  mouseDownHandler(node) {
+    this.setState({ mousePressed: true });
+    this.handleNodeEnter(node, true);
+    console.log("MOUSE DOWN");
+  }
+
+  mouseUpHandler() {
+    this.setState({ mousePressed: false });
+    console.log("MOUSE UP");
+  }
+
   displayData(node) {
     // for debug purposes
     var neighbourData = "";
@@ -147,7 +174,7 @@ export default class visualiser extends Component {
 
     return (
       <>
-        <div className="grid">
+        <div className="visualiser">
           <button
             className="randomise"
             onClick={() => this.generateMaze(0, nodes, ROW_LENGTH, COL_LENGTH)}
@@ -160,31 +187,37 @@ export default class visualiser extends Component {
           >
             A*
           </button>
-          {nodes.map((row, rowID) => (
-            <div key={rowID} className="row">
-              {row.map((node, nodeID) => (
-                <button
-                  key={nodeID}
-                  className="column"
-                  onMouseDown={() => this.handleNodeClick(node)}
-                >
-                  <Node
-                    class="Node"
-                    column={node.column}
-                    row={node.row}
-                    isStart={node.isStart}
-                    isEnd={node.isEnd}
-                    isWall={node.isWall}
-                    isPath={node.isPath}
-                    closed={node.closed}
-                    open={node.open}
-                  ></Node>
-                </button>
-              ))}
-            </div>
-          ))}
+          <div className="grid">
+            {nodes.map((row, rowID) => (
+              <div key={rowID} className="row">
+                {row.map((node, nodeID) => (
+                  <button
+                    key={nodeID}
+                    className="column"
+                    onMouseEnter={() =>
+                      this.handleNodeEnter(node, this.state.mousePressed)
+                    }
+                    onMouseDown={() => this.mouseDownHandler(node)}
+                    onMouseUp={() => this.mouseUpHandler()}
+                  >
+                    <Node
+                      class="Node"
+                      column={node.column}
+                      row={node.row}
+                      isStart={node.isStart}
+                      isEnd={node.isEnd}
+                      isWall={node.isWall}
+                      isPath={node.isPath}
+                      closed={node.closed}
+                      open={node.open}
+                    ></Node>
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div className="nodeInfo">{this.state.selectedNodeData}</div>
         </div>
-        <div>{this.state.selectedNodeData}</div>
       </>
     );
   }
