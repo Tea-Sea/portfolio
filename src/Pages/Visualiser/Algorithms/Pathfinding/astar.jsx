@@ -62,10 +62,11 @@ export function astar(grid, rows, columns) {
   for (let i = 0; i < closedSet.length; i++) {
     closedSet[i].closed = true;
   }
-  // TODO: Do this in the visualiser
-  for (let i = 0; i < openSet.length; i++) {
-    openSet[i].open = true;
-  }
+  // // TODO: Do this in the visualiser
+  // for (let i = 0; i < openSet.length; i++) {
+  //   openSet[i].open = true;
+  // }
+  return openSet;
 }
 
 function determineGValue(current, neighbour) {

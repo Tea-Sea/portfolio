@@ -17,12 +17,12 @@ const COL_START = 0;
 const ROW__END = 15;
 const COL_END = 15;
 
-const ANIMATION_DELAY = 50;
+const ANIMATION_DELAY = 25;
 
 export default class visualiser extends Component {
   constructor(props) {
     super(props);
-    this.state = { nodes: [], selectedNodeData: "None", nodeType: "node" };
+    this.state = { nodes: [], selectedNodeData: "None" };
   }
 
   componentDidMount() {
@@ -60,11 +60,12 @@ export default class visualiser extends Component {
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
-        astar(grid, rows, columns);
+        openSet = astar(grid, rows, columns);
         shortestPath = shortestPathResult(
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
         );
+        this.animate(grid, openSet, "open");
         this.animate(grid, shortestPath, "path");
         break;
       case 1:
@@ -106,11 +107,6 @@ export default class visualiser extends Component {
         default:
           break;
       }
-
-      setTimeout(() => {
-        nodes[i].isPath = true;
-        this.setState({ nodes: grid });
-      }, 50 * i);
     }
   }
 

@@ -1,6 +1,6 @@
 * {
   text-align: center;
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color 0s ease, color 0s ease;
 }
 
 .node:hover {
@@ -8,7 +8,9 @@
   color: black;
 }
 .node {
-  border: 3px solid black;
+  outline: 3px solid black;
+  width: 100%;
+  height: 100%;
 }
 
 .wall {

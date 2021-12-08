@@ -29,7 +29,7 @@ export default class Node extends Component {
       : "";
     return (
       <div id={`${column},${row}`} className={"node " + nodeType}>
-        {column},{row}
+        {" "}
       </div>
     );
   }
