@@ -2,16 +2,19 @@
 
 const DIAGONAL_WIEGHT = Math.SQRT2;
 const PERPENDICULAR_WIEGHT = 1;
+var openSet;
+var closedSet;
 
 export function astar(grid, rows, columns) {
+  openSet = [];
+  closedSet = [];
   var solved = false;
   let currentNode = determineStartNode(grid, rows, columns);
   const endNode = determineEndNode(grid, rows, columns);
   currentNode.g = 0;
   currentNode.h = heuristic(currentNode, endNode);
   currentNode.f = currentNode.g + currentNode.h + 1;
-  var openSet = [];
-  var closedSet = [];
+
   openSet.push(currentNode);
 
   do {
@@ -58,10 +61,10 @@ export function astar(grid, rows, columns) {
     }
   } while (!(solved || openSet.length === 0));
 
-  // TODO: Do this in the visualiser
-  for (let i = 0; i < closedSet.length; i++) {
-    closedSet[i].closed = true;
-  }
+  // // TODO: Do this in the visualiser
+  // for (let i = 0; i < closedSet.length; i++) {
+  //   closedSet[i].closed = true;
+  // }
   // // TODO: Do this in the visualiser
   // for (let i = 0; i < openSet.length; i++) {
   //   openSet[i].open = true;
@@ -147,4 +150,12 @@ export function shortestPathResult(startNode, endNode) {
     }
   }
   return result;
+}
+
+export function openSetResult() {
+  return openSet;
+}
+
+export function closedSetResult() {
+  return closedSet;
 }

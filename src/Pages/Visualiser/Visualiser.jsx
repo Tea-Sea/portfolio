@@ -4,7 +4,12 @@ import Node from "./Node/Node";
 
 import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
 
-import { astar, shortestPathResult } from "./Algorithms/Pathfinding/astar";
+import {
+  astar,
+  closedSetResult,
+  openSetResult,
+  shortestPathResult,
+} from "./Algorithms/Pathfinding/astar";
 
 import "./Visualiser.css";
 
@@ -17,7 +22,7 @@ const COL_START = 0;
 const ROW__END = 15;
 const COL_END = 15;
 
-const ANIMATION_DELAY = 25;
+const ANIMATION_DELAY = 40;
 
 export default class visualiser extends Component {
   constructor(props) {
@@ -54,12 +59,14 @@ export default class visualiser extends Component {
     switch (algorithm) {
       case 0:
         openSet = astar(grid, rows, columns);
+        openSet = openSetResult();
+        closedSet = closedSetResult();
+        console.log(closedSet);
         shortestPath = shortestPathResult(
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
         );
-        this.animate(grid, openSet, "open");
-        this.animate(grid, shortestPath, "path");
+        this.animate(grid, openSet, closedSet, shortestPath);
         break;
       case 1:
         break;
@@ -70,36 +77,20 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
-  animate(grid, nodes, nodeType) {
-    for (let i = 0; i < nodes.length; i++) {
-      switch (nodeType) {
-        case "wall":
+  animate(grid, open, closed, path) {
+    for (let i = 0; i < closed.length; i++) {
+      if (i === closed.length - 1) {
+        for (let j = 0; j < path.length; j++) {
           setTimeout(() => {
-            nodes[i].isWall = true;
+            path[j].isPath = true;
             this.setState({ nodes: grid });
           }, ANIMATION_DELAY * i);
-          break;
-        case "open":
-          setTimeout(() => {
-            nodes[i].open = true;
-            this.setState({ nodes: grid });
-          }, ANIMATION_DELAY * i);
-          break;
-        case "closed":
-          setTimeout(() => {
-            nodes[i].closed = true;
-            this.setState({ nodes: grid });
-          }, ANIMATION_DELAY * i);
-          break;
-        case "path":
-          setTimeout(() => {
-            nodes[i].isPath = true;
-            this.setState({ nodes: grid });
-          }, ANIMATION_DELAY * i);
-          break;
-        default:
-          break;
+        }
       }
+      setTimeout(() => {
+        closed[i].closed = true;
+        this.setState({ nodes: grid });
+      }, ANIMATION_DELAY * i);
     }
   }
 
@@ -135,7 +126,6 @@ export default class visualiser extends Component {
         }
         break;
       default:
-        console.log("hovered node ", node.column, node.row);
         break;
     }
     this.displayData(node);
