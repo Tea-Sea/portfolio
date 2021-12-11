@@ -22,7 +22,7 @@ const COL_START = 0;
 const ROW__END = 15;
 const COL_END = 15;
 
-const ANIMATION_DELAY = 40;
+const ANIMATION_DELAY = 30;
 
 export default class visualiser extends Component {
   constructor(props) {
@@ -61,7 +61,6 @@ export default class visualiser extends Component {
         openSet = astar(grid, rows, columns);
         openSet = openSetResult();
         closedSet = closedSetResult();
-        console.log(closedSet);
         shortestPath = shortestPathResult(
           grid[COL_START][ROW_START],
           grid[COL_END][ROW__END]
@@ -78,8 +77,9 @@ export default class visualiser extends Component {
   }
 
   animate(grid, open, closed, path) {
-    for (let i = 0; i < closed.length; i++) {
-      if (i === closed.length - 1) {
+    let nodeCount = Math.max(open.length, closed.length);
+    for (let i = 0; i < nodeCount; i++) {
+      if (i === nodeCount - 1) {
         for (let j = 0; j < path.length; j++) {
           setTimeout(() => {
             path[j].isPath = true;
@@ -87,10 +87,18 @@ export default class visualiser extends Component {
           }, ANIMATION_DELAY * i);
         }
       }
-      setTimeout(() => {
-        closed[i].closed = true;
-        this.setState({ nodes: grid });
-      }, ANIMATION_DELAY * i);
+      if (i < closed.length) {
+        setTimeout(() => {
+          closed[i].closed = true;
+          this.setState({ nodes: grid });
+        }, ANIMATION_DELAY * i);
+      }
+      if (i < open.length) {
+        setTimeout(() => {
+          open[i].open = true;
+          this.setState({ nodes: grid });
+        }, ANIMATION_DELAY * i);
+      }
     }
   }
 
