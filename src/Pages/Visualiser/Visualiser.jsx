@@ -169,10 +169,12 @@ export default class visualiser extends Component {
 
   render() {
     const { nodes } = this.state;
+    var colWidth = 100 / COL_LENGTH + "%";
+    var rowHeight = 100 / ROW_LENGTH + "%";
 
     return (
       <>
-        <div className="visualiser">
+        <div id="visualiser">
           <button
             className="randomise"
             onClick={() => this.generateMaze(0, nodes, ROW_LENGTH, COL_LENGTH)}
@@ -185,11 +187,11 @@ export default class visualiser extends Component {
           >
             A*
           </button>
-          <div className="grid">
+          <div id="grid">
             {nodes.map((row, rowID) => (
-              <div key={rowID} className="row">
+              <div key={rowID} className="row" style={{ height: rowHeight }}>
                 {row.map((node, nodeID) => (
-                  <button
+                  <div
                     key={nodeID}
                     className="column"
                     onMouseEnter={() =>
@@ -197,6 +199,7 @@ export default class visualiser extends Component {
                     }
                     onMouseDown={() => this.mouseDownHandler(node)}
                     onMouseUp={() => this.mouseUpHandler()}
+                    style={{ width: colWidth }}
                   >
                     <Node
                       class="Node"
@@ -209,12 +212,12 @@ export default class visualiser extends Component {
                       closed={node.closed}
                       open={node.open}
                     ></Node>
-                  </button>
+                  </div>
                 ))}
               </div>
             ))}
           </div>
-          <div className="nodeInfo">{this.state.selectedNodeData}</div>
+          <div id="nodeInfo">{this.state.selectedNodeData}</div>
         </div>
       </>
     );

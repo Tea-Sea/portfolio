@@ -4,3 +4,7 @@ body,
 #root {
   height: 100%;
 }
+
+body {
+  background: linear-gradient(rgb(139, 89, 255), rgb(27, 32, 51));
+}

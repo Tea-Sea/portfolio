@@ -1,34 +1,28 @@
-.visualiser {
+#visualiser {
   margin: auto;
   width: 90%;
-  height: 100%;
-  outline: 3px solid green;
-  padding: 10px;
+  height: 90%;
+  outline: 3px solid black;
 }
 
+#nodeInfo {
+  outline: 1px black;
+}
 .row {
   width: 100%;
-  height: 3%;
   text-align: center;
-  padding: 2px;
+
   display: block;
 }
 
 .column {
-  width: 4%;
   height: 100%;
-  padding: 3px;
   display: inline-block;
   background: none;
-  border: none;
   font: inherit;
 }
 
-.grid {
+#grid {
   width: 100%;
-  height: 100%;
-}
-
-.nodeInfo {
-  position: inherit;
+  height: 90%;
 }
