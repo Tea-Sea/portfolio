@@ -7,22 +7,21 @@ import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
 import {
   astar,
   closedSetResult,
-  openSetResult,
   shortestPathResult,
 } from "./Algorithms/Pathfinding/astar";
 
 import "./Visualiser.css";
 
-const ROW_LENGTH = 20;
-const COL_LENGTH = 20;
+var ROW_LENGTH = 20;
+var COL_LENGTH = 30;
 
-const ROW_START = 0;
-const COL_START = 0;
+var ROW_START = 0;
+var COL_START = 0;
 
-const ROW__END = 15;
-const COL_END = 15;
+var ROW__END = ROW_LENGTH - 1;
+var COL_END = COL_LENGTH - 1;
 
-const ANIMATION_DELAY = 30;
+const ANIMATION_DELAY = 40;
 
 export default class visualiser extends Component {
   constructor(props) {
@@ -53,19 +52,17 @@ export default class visualiser extends Component {
 
   findPath(algorithm, grid, rows, columns) {
     let shortestPath = [];
-    let openSet = [];
     let closedSet = [];
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
-        openSet = astar(grid, rows, columns);
-        openSet = openSetResult();
+        astar(grid, rows, columns);
         closedSet = closedSetResult();
         shortestPath = shortestPathResult(
-          grid[COL_START][ROW_START],
-          grid[COL_END][ROW__END]
+          grid[ROW_START][COL_START],
+          grid[ROW__END][COL_END]
         );
-        this.animate(grid, openSet, closedSet, shortestPath);
+        this.animate(grid, closedSet, shortestPath);
         break;
       case 1:
         break;
@@ -76,8 +73,8 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
-  animate(grid, open, closed, path) {
-    let nodeCount = Math.max(open.length, closed.length);
+  animate(grid, closed, path) {
+    let nodeCount = closed.length;
     for (let i = 0; i < nodeCount; i++) {
       if (i === nodeCount - 1) {
         for (let j = 0; j < path.length; j++) {
@@ -90,12 +87,6 @@ export default class visualiser extends Component {
       if (i < closed.length) {
         setTimeout(() => {
           closed[i].closed = true;
-          this.setState({ nodes: grid });
-        }, ANIMATION_DELAY * i);
-      }
-      if (i < open.length) {
-        setTimeout(() => {
-          open[i].open = true;
           this.setState({ nodes: grid });
         }, ANIMATION_DELAY * i);
       }
@@ -118,7 +109,6 @@ export default class visualiser extends Component {
   }
 
   handleNodeClick(node) {
-    console.log("clicked");
     if (!(node.isStart || node.isEnd)) {
       node.isWall = !node.isWall;
     }
@@ -130,7 +120,6 @@ export default class visualiser extends Component {
       case true:
         if (!(node.isStart || node.isEnd)) {
           node.isWall = !node.isWall;
-          console.log("TOGGLED");
         }
         break;
       default:
@@ -142,12 +131,10 @@ export default class visualiser extends Component {
   mouseDownHandler(node) {
     this.setState({ mousePressed: true });
     this.handleNodeEnter(node, true);
-    console.log("MOUSE DOWN");
   }
 
   mouseUpHandler() {
     this.setState({ mousePressed: false });
-    console.log("MOUSE UP");
   }
 
   displayData(node) {
@@ -217,7 +204,9 @@ export default class visualiser extends Component {
               </div>
             ))}
           </div>
-          <div id="nodeInfo">{this.state.selectedNodeData}</div>
+          <div id="nodeInfo">
+            <b>{this.state.selectedNodeData}</b>
+          </div>
         </div>
       </>
     );

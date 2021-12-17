@@ -2,11 +2,10 @@
   margin: auto;
   width: 90%;
   height: 90%;
-  outline: 3px solid black;
 }
 
 #nodeInfo {
-  outline: 1px black;
+  color: darkgrey;
 }
 .row {
   width: 100%;

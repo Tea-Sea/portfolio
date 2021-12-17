@@ -1,6 +1,6 @@
 * {
   text-align: center;
-  transition: background-color 0s ease, color 0s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 .node:hover {
@@ -8,30 +8,31 @@
   color: black;
 }
 .node {
-  outline: 2px solid darkgray;
+  border: 2px solid darkgrey;
   width: 100%;
   height: 100%;
 }
 
 .wall {
-  background-color: black;
+  background-color: rgb(46, 44, 72);
+
   color: white;
 }
 
 .start {
-  background-color: green;
+  background-color: rgb(45, 176, 109);
 }
 
 .end {
-  background-color: red;
+  background-color: rgb(255, 130, 120);
 }
 
 .path {
-  background-color: gray;
+  background-color: darkorange;
 }
 
 .closed {
-  background-color: yellow;
+  background-color: rgb(255, 229, 126);
 }
 
 .open {
