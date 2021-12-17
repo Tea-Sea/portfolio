@@ -1,10 +1,12 @@
 * {
   text-align: center;
   transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-user-drag: none;
 }
 
 .node:hover {
   background-color: yellow;
+  transition: background-color 0.2s ease, color 0.2s ease;
   color: black;
 }
 .node {

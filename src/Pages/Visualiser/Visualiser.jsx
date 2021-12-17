@@ -157,7 +157,7 @@ export default class visualiser extends Component {
   render() {
     const { nodes } = this.state;
     var colWidth = 100 / COL_LENGTH + "%";
-    var rowHeight = 100 / ROW_LENGTH + "%";
+    var rowHeight = 99 / ROW_LENGTH + "%";
 
     return (
       <>

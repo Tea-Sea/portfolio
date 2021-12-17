@@ -12,9 +12,17 @@ class App extends Component {
     return (
       <BrowserRouter>
         <nav>
-          <a href="/">Home</a>
-          <a href="/visualiser">Visualiser</a>
-          <a href="/about">About</a>
+          <div id="header">
+            <a className="headerLink" href="/">
+              HOME
+            </a>
+            <a className="headerLink" href="/visualiser">
+              VISUALISER
+            </a>
+            <a className="headerLink" href="/about">
+              ABOUT
+            </a>
+          </div>
           <Switch>
             <Route path="/" component={Home} exact />
             <Route path="/visualiser" component={Visualiser} exact />
