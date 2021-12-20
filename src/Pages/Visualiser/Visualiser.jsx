@@ -207,6 +207,39 @@ export default class visualiser extends Component {
           <div id="nodeInfo">
             <b>{this.state.selectedNodeData}</b>
           </div>
+          <div id="legend">
+            <div
+              className="displayNode"
+              style={{ width: colWidth, height: rowHeight }}
+            >
+              <Node
+                class="Node"
+                column="0"
+                row="0"
+                isStart="false"
+                isEnd="false"
+                isWall="false"
+                isPath="false"
+                closed="false"
+                open="false"
+              ></Node>
+            </div>
+            <div className="legendInfo">
+              <b>NODE</b>
+            </div>
+            <Node
+              class="Node"
+              column="0"
+              row="0"
+              isStart="false"
+              isEnd="false"
+              isWall="false"
+              isPath="false"
+              closed="false"
+              open="false"
+              style={{ width: colWidth }}
+            ></Node>
+          </div>
         </div>
       </>
     );

@@ -1,4 +1,6 @@
 import React from "react";
+import { ReactComponent as GithubLogo } from "../../Icons/Github.svg";
+import { ReactComponent as LinkedInLogo } from "../../Icons/LI.svg";
 
 import "./Home.css";
 
@@ -7,12 +9,20 @@ const home = () => {
     <div id="personalInfo">
       <h1>Tom Caspar</h1>
       <h2>Graduate Software Engineer</h2>
-      <a href="https://github.com/Tea-Sea">
-        <img className="icon" src="./././icons/Github.png" alt="Github"></img>
+      <a
+        href="https://github.com/Tea-Sea"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <GithubLogo className="icon" />
       </a>
       <span></span>
-      <a href="www.linkedin.com/in/tom-caspar">
-        <img className="icon" src="./././icons/LI.png" alt="LinkedIn"></img>
+      <a
+        href="https://www.linkedin.com/in/tom-caspar"
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <LinkedInLogo className="icon" />
       </a>
     </div>
   );
