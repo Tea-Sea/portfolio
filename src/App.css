@@ -24,6 +24,7 @@ body {
   display: inline;
   justify-content: space-between;
   word-spacing: 10vw;
+  transition: text-decoration 0.2 ease;
 }
 
 .headerLink:link {
@@ -31,6 +32,10 @@ body {
 }
 
 .headerLink:visited {
+  text-decoration: underline;
+}
+
+.headerLink:active {
   text-decoration: underline;
 }
 

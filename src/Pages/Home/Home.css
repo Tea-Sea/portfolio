@@ -4,7 +4,7 @@
 
 #personalInfo {
   position: absolute;
-  top: 40%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
@@ -32,13 +32,34 @@ span {
   transition: transform 0.2s ease, fill 0.2s ease;
   fill: darkgrey;
 }
+
 .icon:hover {
   transform: scale(1.3);
   fill: rgb(46, 44, 72);
 }
+.resumeButton:link,
+.resumeButton:visited {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 1vw 4.3vw;
+  display: inline-block;
+  font-size: 1vw;
+  border-radius: 10vw;
+  transition: all 0.2s;
+  margin-top: 3vw;
+  background-color: rgb(46, 44, 72);
+  color: darkgrey;
+}
 
-#resumeButton {
-  float: left;
+.resumeButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-decoration: underline;
+}
+
+.resumeButton:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
 @media only screen and (max-width: 600px) {
@@ -54,5 +75,12 @@ span {
     width: 8vw;
     height: 8vw;
     transition: transform 0.2s ease;
+  }
+
+  .resumeButton:link,
+  .resumeButton:visited {
+    padding: 5vw 16vw;
+    font-size: 4vw;
+    border-radius: 10vw;
   }
 }

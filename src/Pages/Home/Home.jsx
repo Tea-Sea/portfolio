@@ -25,14 +25,16 @@ const home = () => {
       >
         <LinkedInLogo className="icon" />
       </a>
-      <a
-        id="resumeButton"
-        href={Resume}
-        target="_blank"
-        rel="noreferrer noopener"
-      >
-        <button>RESUME</button>
-      </a>
+      <div>
+        <a
+          className="resumeButton"
+          href={Resume}
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          Résumé
+        </a>
+      </div>
     </div>
   );
 };

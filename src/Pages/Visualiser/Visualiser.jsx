@@ -162,24 +162,21 @@ export default class visualiser extends Component {
     return (
       <>
         <div id="visualiser">
-          <button
-            className="randomise"
+          <div
+            className="options"
             onClick={() => this.generateMaze(0, nodes, ROW_LENGTH, COL_LENGTH)}
           >
             Generate Maze
-          </button>
-          <button
-            className="pathfind"
+          </div>
+          <div
+            className="options"
             onClick={() => this.findPath(0, nodes, ROW_LENGTH, COL_LENGTH)}
           >
             A*
-          </button>
-          <button
-            className="clearBoard"
-            onClick={() => this.clearGrid(nodes, 0)}
-          >
+          </div>
+          <div className="options" onClick={() => this.clearGrid(nodes, 0)}>
             Clear Board
-          </button>
+          </div>
           <div id="grid">
             {nodes.map((row, rowID) => (
               <div key={rowID} className="row" style={{ height: rowHeight }}>

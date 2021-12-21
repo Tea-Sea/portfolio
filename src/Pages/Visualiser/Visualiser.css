@@ -22,7 +22,7 @@
 
 #grid {
   width: 100%;
-  height: 90%;
+  height: 80%;
 }
 
 #legend {
@@ -45,11 +45,42 @@ dd {
   display: inline-block;
 }
 
+.options {
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.5vw 1vw;
+  display: inline-block;
+  font-size: 1vw;
+  border-radius: 10vw;
+  transition: all 0.2s;
+  margin: 0.3vw;
+  background-color: rgb(46, 44, 72);
+  color: darkgrey;
+  outline: 1px solid darkgray;
+}
+
+.options:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.options:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
 @media only screen and (max-width: 600px) {
   .legendInfo {
     font-size: 3vw;
   }
   .displayNode {
     display: flex;
+  }
+
+  .options {
+    padding: 1vw 2vw;
+    font-size: 3vw;
   }
 }
