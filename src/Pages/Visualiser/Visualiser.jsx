@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import Node from "./Node/Node";
 
+import { ReactComponent as GithubLogo } from "../../Static/Github.svg";
+
 import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
 
 import {
@@ -30,6 +32,7 @@ export default class visualiser extends Component {
   }
 
   componentDidMount() {
+    document.title = "Pathfinding Visualiser";
     const nodes = generateGrid();
     this.setState({ nodes }, () => {});
     //this.determineType(nodes);
@@ -241,6 +244,14 @@ export default class visualiser extends Component {
             <dd className="legendInfo">= Path</dd>
             <span></span>
           </li>
+          <a
+            id="githubLogo"
+            href="https://github.com/Tea-Sea/portfolio/tree/main/src/Pages/Visualiser"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <GithubLogo className="icon" />
+          </a>
         </div>
       </>
     );

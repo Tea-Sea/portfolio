@@ -6,6 +6,7 @@ import Resume from "../../Static/Resume.pdf";
 import "./Home.css";
 
 const home = () => {
+  document.title = "Home";
   return (
     <div id="personalInfo">
       <h1>Tom Caspar</h1>

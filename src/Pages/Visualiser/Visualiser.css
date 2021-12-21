@@ -56,7 +56,6 @@ dd {
   margin: 0.3vw;
   background-color: rgb(46, 44, 72);
   color: darkgrey;
-  outline: 1px solid darkgray;
 }
 
 .options:hover {
@@ -71,6 +70,14 @@ dd {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 
+#githubLogo {
+  position: fixed;
+  margin-bottom: 0.4vw;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
 @media only screen and (max-width: 600px) {
   .legendInfo {
     font-size: 3vw;
@@ -82,5 +89,9 @@ dd {
   .options {
     padding: 1vw 2vw;
     font-size: 3vw;
+  }
+
+  #githubLogo {
+    display: none;
   }
 }
