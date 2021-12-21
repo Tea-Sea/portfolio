@@ -6,6 +6,7 @@
 
 #nodeInfo {
   color: darkgrey;
+  font-size: 1.3vw;
 }
 .row {
   width: 100%;
@@ -17,7 +18,6 @@
   height: 100%;
   display: inline-block;
   background: none;
-  font: inherit;
 }
 
 #grid {
@@ -27,6 +27,29 @@
 
 #legend {
   width: 100%;
-  height: 10%;
-  display: block;
+  display: inline-block;
+}
+
+.displayNode {
+  width: 2vw;
+  height: 2vw;
+  display: inline-block;
+}
+
+.legendInfo {
+  display: inline;
+  font-size: 1.3vw;
+}
+
+dd {
+  display: inline-block;
+}
+
+@media only screen and (max-width: 600px) {
+  .legendInfo {
+    font-size: 3vw;
+  }
+  .displayNode {
+    display: flex;
+  }
 }

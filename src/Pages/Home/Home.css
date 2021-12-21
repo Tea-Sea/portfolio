@@ -37,6 +37,10 @@ span {
   fill: rgb(46, 44, 72);
 }
 
+#resumeButton {
+  float: left;
+}
+
 @media only screen and (max-width: 600px) {
   h1 {
     font-size: 10vw;
@@ -47,7 +51,8 @@ span {
   }
 
   .icon {
-    transform: scale(6vw);
+    width: 8vw;
+    height: 8vw;
     transition: transform 0.2s ease;
   }
 }

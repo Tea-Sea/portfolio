@@ -12,11 +12,11 @@ body {
 
 #header {
   background: rgb(46, 44, 72);
-  padding: 1%;
+  padding: 1vw;
 }
 
 .headerLink {
-  padding: 1%;
+  padding: 1vw;
   height: 100%;
   text-align: center;
   color: darkgrey;
@@ -31,7 +31,7 @@ body {
 }
 
 .headerLink:visited {
-  text-decoration: none;
+  text-decoration: underline;
 }
 
 .headerLink:hover {

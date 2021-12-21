@@ -174,6 +174,12 @@ export default class visualiser extends Component {
           >
             A*
           </button>
+          <button
+            className="clearBoard"
+            onClick={() => this.clearGrid(nodes, 0)}
+          >
+            Clear Board
+          </button>
           <div id="grid">
             {nodes.map((row, rowID) => (
               <div key={rowID} className="row" style={{ height: rowHeight }}>
@@ -207,39 +213,37 @@ export default class visualiser extends Component {
           <div id="nodeInfo">
             <b>{this.state.selectedNodeData}</b>
           </div>
-          <div id="legend">
-            <div
-              className="displayNode"
-              style={{ width: colWidth, height: rowHeight }}
-            >
-              <Node
-                class="Node"
-                column="0"
-                row="0"
-                isStart="false"
-                isEnd="false"
-                isWall="false"
-                isPath="false"
-                closed="false"
-                open="false"
-              ></Node>
-            </div>
-            <div className="legendInfo">
-              <b>NODE</b>
-            </div>
-            <Node
-              class="Node"
-              column="0"
-              row="0"
-              isStart="false"
-              isEnd="false"
-              isWall="false"
-              isPath="false"
-              closed="false"
-              open="false"
-              style={{ width: colWidth }}
-            ></Node>
-          </div>
+          <li id="legend" style={{ height: rowHeight }}>
+            <dt className="displayNode">
+              <Node isStart="true"></Node>
+            </dt>
+            <dd className="legendInfo">= Start</dd>
+            <span></span>
+
+            <dt className="displayNode">
+              <Node isEnd="true"></Node>
+            </dt>
+            <dd className="legendInfo">= End</dd>
+            <span></span>
+
+            <dt className="displayNode">
+              <Node isWall="true"></Node>
+            </dt>
+            <dd className="legendInfo">= Wall</dd>
+            <span></span>
+
+            <dt className="displayNode">
+              <Node closed="true"></Node>
+            </dt>
+            <dd className="legendInfo">= Traversed</dd>
+            <span></span>
+
+            <dt className="displayNode">
+              <Node isPath="true"></Node>
+            </dt>
+            <dd className="legendInfo">= Path</dd>
+            <span></span>
+          </li>
         </div>
       </>
     );

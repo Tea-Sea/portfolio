@@ -1,6 +1,7 @@
 import React from "react";
-import { ReactComponent as GithubLogo } from "../../Icons/Github.svg";
-import { ReactComponent as LinkedInLogo } from "../../Icons/LI.svg";
+import { ReactComponent as GithubLogo } from "../../Static/Github.svg";
+import { ReactComponent as LinkedInLogo } from "../../Static/LI.svg";
+import Resume from "../../Static/Resume.pdf";
 
 import "./Home.css";
 
@@ -23,6 +24,14 @@ const home = () => {
         rel="noreferrer noopener"
       >
         <LinkedInLogo className="icon" />
+      </a>
+      <a
+        id="resumeButton"
+        href={Resume}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        <button>RESUME</button>
       </a>
     </div>
   );
