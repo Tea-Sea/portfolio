@@ -6,6 +6,8 @@ import { ReactComponent as GithubLogo } from "../../Static/Github.svg";
 
 import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
 
+import { recursiveDivison } from "./Algorithms/Maze_Generation/RecursiveDivision";
+
 import {
   astar,
   closedSetResult,
@@ -45,6 +47,7 @@ export default class visualiser extends Component {
         randomiser(grid, rows, columns);
         break;
       case 1:
+        recursiveDivison(grid, rows, columns);
         break;
       default:
         console.log("Error choosing Maze Generation Algorithm");
@@ -119,14 +122,10 @@ export default class visualiser extends Component {
   }
 
   handleNodeEnter(node, mouseDown) {
-    switch (mouseDown) {
-      case true:
-        if (!(node.isStart || node.isEnd)) {
-          node.isWall = !node.isWall;
-        }
-        break;
-      default:
-        break;
+    if (mouseDown) {
+      if (!(node.isStart || node.isEnd)) {
+        node.isWall = !node.isWall;
+      }
     }
     this.displayData(node);
   }
@@ -169,7 +168,13 @@ export default class visualiser extends Component {
             className="options"
             onClick={() => this.generateMaze(0, nodes, ROW_LENGTH, COL_LENGTH)}
           >
-            Generate Maze
+            Generate Random Maze
+          </div>
+          <div
+            className="options"
+            onClick={() => this.generateMaze(1, nodes, ROW_LENGTH, COL_LENGTH)}
+          >
+            Generate Recursive Maze
           </div>
           <div
             className="options"
