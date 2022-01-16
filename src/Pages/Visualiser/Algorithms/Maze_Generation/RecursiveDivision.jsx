@@ -11,48 +11,31 @@ export function recursiveDivison(grid, rows, columns) {
   };
   console.log(initialField);
   let subfields = [initialField];
-  let orientation = 0;
+  let walls = [];
+  generateSubfields(grid, initialField, subfields, walls);
   let fail = 0;
-  let lines = [];
-
-  while (subfields.length > 0) {
-    if (subfields[subfields.length - 1].width > 3) {
-      let lineOffset = subfields[subfields.length - 1].x;
-      do {
-        var linePos = Math.floor(
-          Math.random() * subfields[subfields.length - 1].width
-        );
-        console.log(linePos);
-      } while (
-        linePos < 1 ||
-        linePos > subfields[subfields.length - 1].width - 1
-      );
-
-      let temp = subfields[subfields.length - 1];
-      subfields.pop();
-      createSubfields(temp, linePos, subfields);
-      linePos = linePos + lineOffset;
-      drawLine(grid, linePos, orientation);
-      lines.push(linePos);
-    } else {
-      subfields.pop();
-    }
-    fail++;
-    if (fail > 100) {
-      subfields.length = 0;
-      console.log("failed");
-    }
+  fail++;
+  if (fail > 100) {
+    subfields.length = 0;
+    console.log("failed");
   }
 }
 
-function drawLine(grid, position, orientation) {
+function addWalls(grid, position, walls) {
   for (let i = 0; i < grid.length; i++) {
+    walls.push(grid[i][position]);
     grid[i][position].isWall = true;
   }
   console.log("line at ", position);
 }
 
-function createSubfields(field, linePos, array) {
+function subdivideField(field, sfArray, wallArray) {
+  do {
+    var linePos = Math.floor(Math.random() * field.width);
+    console.log(linePos);
+    //var linePos = Math.floor(field.width / 2);
+  } while (linePos < 1 || linePos > field.width - 2);
+
   let sf1 = {
     height: field.height,
     width: linePos - 1,
@@ -67,6 +50,25 @@ function createSubfields(field, linePos, array) {
     y: field.y,
   };
 
-  array.push(sf1);
-  array.push(sf2);
+  sfArray.push(sf1);
+  sfArray.push(sf2);
+  return linePos;
+}
+
+function generateSubfields(grid, field, sfArray, walls) {
+  let orientation = 0;
+
+  if (field.width > 3) {
+    let linePos = subdivideField(field, sfArray, walls) + field.x;
+    sfArray.splice(sfArray.indexOf(field), 1);
+    addWalls(grid, linePos, walls);
+    generateSubfields(grid, sfArray[sfArray.length - 1], sfArray, walls);
+    generateSubfields(grid, sfArray[sfArray.length - 1], sfArray, walls);
+  } else {
+    sfArray.pop();
+  }
+  if (sfArray.length < 1) {
+    console.log("complete");
+    return;
+  }
 }
