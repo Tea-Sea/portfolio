@@ -21,11 +21,14 @@ export function recursiveDivison(grid, rows, columns) {
   }
 }
 
-function addWalls(grid, position, walls) {
-  for (let i = 0; i < grid.length; i++) {
+function addWalls(grid, field, position, walls) {
+  let doorway = Math.floor(Math.random() * field.height);
+  for (let i = 0; i < field.height; i++) {
     walls.push(grid[i][position]);
     grid[i][position].isWall = true;
   }
+  grid[doorway][position].isWall = false;
+  walls.splice(walls.indexOf(doorway), 1);
   console.log("line at ", position);
 }
 
@@ -61,7 +64,7 @@ function generateSubfields(grid, field, sfArray, walls) {
   if (field.width > 3) {
     let linePos = subdivideField(field, sfArray, walls) + field.x;
     sfArray.splice(sfArray.indexOf(field), 1);
-    addWalls(grid, linePos, walls);
+    addWalls(grid, field, linePos, walls);
     generateSubfields(grid, sfArray[sfArray.length - 1], sfArray, walls);
     generateSubfields(grid, sfArray[sfArray.length - 1], sfArray, walls);
   } else {
