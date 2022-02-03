@@ -19,9 +19,11 @@ class App extends Component {
             <a className="headerLink" href="/visualiser">
               VISUALISER
             </a>
+            {/*
             <a className="headerLink" href="/about">
               ABOUT
             </a>
+            */}
           </div>
           <Switch>
             <Route path="/" component={Home} exact />

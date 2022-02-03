@@ -2,7 +2,6 @@
 // For a rectangular area of nodes, draw a line of walls down the middle
 // Punch a hole in this line, repeat until a maze has been formed
 export function recursiveDivison(grid, rows, columns) {
-  // TODO: Implement Recursive division
   let initialField = {
     height: rows,
     width: columns,
@@ -10,137 +9,120 @@ export function recursiveDivison(grid, rows, columns) {
     y: 0,
   };
   let subfields = [initialField];
+  let lines = [];
   let walls = [];
-  generateSubfields(grid, initialField, subfields, walls);
-  let fail = 0;
-  fail++;
-  if (fail > 100) {
-    subfields.length = 0;
-    console.log("failed");
-  }
+  generateSubfields(grid, initialField, subfields, lines, walls);
+  return walls;
 }
 
-function addWalls(grid, field, position, orientation, walls) {
-  let doorway = null;
-  // TODO: Add check so doorways dont open up to a wall
-  if (!orientation) {
-    for (let i = 0; i < field.height; i++) {
-      walls.push(grid[i + field.y][position]);
-      grid[i + field.y][position].isWall = true;
-    }
-    doorway = field.y + Math.floor(Math.random() * field.height);
-    grid[doorway][position].isWall = false;
-    walls.splice(walls.indexOf(field.height - doorway), 1);
-    console.log("DOOR: ", doorway, position);
-  } else {
-    for (let i = 0; i < field.width; i++) {
-      walls.push(grid[position][i + field.x]);
-      grid[position][i + field.x].isWall = true;
-    }
-    doorway = field.x + Math.floor(Math.random() * field.width);
-    grid[position][doorway].isWall = false;
-    walls.splice(walls.indexOf(field.width - doorway), 1);
-    console.log("DOOR: ", position, doorway);
+function addWalls(grid, line, walls) {
+  for (let i = 0; i < line.length; i++) {
+    grid[line.y + !line.orientation * i][
+      line.x + line.orientation * i
+    ].isWall = true;
+    walls.push(
+      grid[line.y + !line.orientation * i][line.x + line.orientation * i]
+    );
   }
-  if (orientation) {
-    console.log("line at ", position, "Horizontal");
-  } else {
-    console.log("line at ", position, "Vertical");
-  }
+  walls.splice(
+    walls.indexOf(
+      grid[line.y + !line.orientation * line.doorway][
+        line.x + line.orientation * line.doorway
+      ]
+    ),
+    1
+  );
+
+  grid[line.y + !line.orientation * line.doorway][
+    line.x + line.orientation * line.doorway
+  ].isWall = false;
 }
 
-function subdivideField(field, orientation, sfArray) {
-  var sf1;
-  var sf2;
-  var lim;
-  if (orientation) {
-    lim = field.height;
-  } else {
-    lim = field.width;
-  }
-  do {
-    var linePos = Math.floor(Math.random() * lim);
-    //var linePos = Math.floor(lim / 2);
-  } while (linePos < 2 || linePos > lim - 2);
-
-  switch (orientation) {
-    case 0:
-      sf1 = {
-        height: field.height,
-        width: linePos,
-        x: field.x,
-        y: field.y,
-      };
-
-      sf2 = {
-        height: field.height,
-        width: field.width - linePos - 1,
-        x: field.x + linePos + 1,
-        y: field.y,
-      };
-
-      break;
-    case 1:
-      sf1 = {
-        height: linePos,
-        width: field.width,
-        x: field.x,
-        y: field.y,
-      };
-
-      sf2 = {
-        height: field.height - linePos - 1,
-        width: field.width,
-        x: field.x,
-        y: field.y + linePos + 1,
-      };
-      break;
-    default:
-      console.log("problem with orientation");
-      return;
-  }
-  //console.log("sf1: ", sf1);
-  //console.log("sf2: ", sf2);
-  sfArray.push(sf1);
-  sfArray.push(sf2);
-  for (let j = 0; j < sfArray.length; j++) {
-    //console.log(sfArray[j]);
-  }
-
-  return linePos;
-}
-
-function generateSubfields(grid, field, sfArray, walls) {
-  let orientation = null;
-  let offset = 0;
+function subdivideField(field, sfArray, lineArray) {
+  let sf1;
+  let sf2;
+  let line;
+  let lim;
+  let lineOrientation = null;
+  // Check field is valid
   if (field.width > 3 || field.height > 3) {
+    // Determine Line Orientation
     if (field.width === field.height) {
-      orientation = Math.round(Math.random());
+      // If field square, split randomly
+      lineOrientation = Math.round(Math.random());
     } else if (field.width > field.height) {
-      orientation = 0;
+      // If field wider, split vertically
+      lineOrientation = 0;
     } else {
-      orientation = 1;
+      // If field taller, split horizonatally
+      lineOrientation = 1;
     }
-
-    if (orientation) {
-      offset = field.y;
+    // Determine max value for line position
+    if (lineOrientation) {
+      lim = field.height;
     } else {
-      offset = field.x;
+      lim = field.width;
     }
+    do {
+      // Ensure lines only occur on odd cells
+      var splitPosition = Math.floor((Math.random() * lim) / 2) * 2 + 1;
+      //var splitPosition = Math.floor(lim / 2);
+    } while (splitPosition < 2 || splitPosition > lim - 2);
 
-    let linePos = subdivideField(field, orientation, sfArray, walls) + offset;
+    // Define subfield 1
+    sf1 = {
+      x: field.x,
+      y: field.y,
+      width: field.width * lineOrientation + splitPosition * !lineOrientation,
+      height: field.height * !lineOrientation + splitPosition * lineOrientation,
+    };
+
+    // Define subfield 2
+    sf2 = {
+      x: field.x + (splitPosition + 1) * !lineOrientation,
+      y: field.y + (splitPosition + 1) * lineOrientation,
+      width: field.width - (splitPosition + 1) * !lineOrientation,
+      height: field.height - (splitPosition + 1) * lineOrientation,
+    };
+
+    //Define line between subfields
+    line = {
+      x: field.x + splitPosition * !lineOrientation,
+      y: field.y + splitPosition * lineOrientation,
+      length: field.width * lineOrientation + field.height * !lineOrientation,
+      orientation: lineOrientation,
+      //Ensure doorways only occur on even cells
+      doorway:
+        Math.floor(
+          (Math.random() *
+            (field.width * lineOrientation + field.height * !lineOrientation)) /
+            2
+        ) * 2,
+    };
+    // Push objects into respective arrays
+    sfArray.push(sf1);
+    sfArray.push(sf2);
+    lineArray.push(line);
+    // Remove current field from array
     sfArray.splice(sfArray.indexOf(field), 1);
-    //console.log(sfArray);
-    addWalls(grid, field, linePos, orientation, walls);
-    //debugger;
-    generateSubfields(grid, sfArray[sfArray.length - 1], sfArray, walls);
-    //debugger;
-    generateSubfields(grid, sfArray[sfArray.length - 1], sfArray, walls);
   } else {
     sfArray.pop();
   }
+}
+
+function generateSubfields(grid, field, sfArray, lineArray, walls) {
+  subdivideField(field, sfArray, lineArray);
   if (sfArray.length < 1) {
     console.log("complete");
     return;
   }
+  addWalls(grid, lineArray[lineArray.length - 1], walls);
+  // Recursively generate subfields
+  generateSubfields(
+    grid,
+    sfArray[sfArray.length - 1],
+    sfArray,
+    lineArray,
+    walls
+  );
 }

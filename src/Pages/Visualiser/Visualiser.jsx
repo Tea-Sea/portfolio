@@ -16,8 +16,8 @@ import {
 
 import "./Visualiser.css";
 
-var ROW_LENGTH = 20;
-var COL_LENGTH = 30;
+var ROW_LENGTH = 21;
+var COL_LENGTH = 31;
 
 var ROW_START = 0;
 var COL_START = 0;
@@ -41,19 +41,21 @@ export default class visualiser extends Component {
   }
 
   generateMaze(algorithm, grid, rows, columns) {
+    let maze = [];
     this.clearGrid(grid, false);
     switch (algorithm) {
       case 0:
         randomiser(grid, rows, columns);
         break;
       case 1:
-        recursiveDivison(grid, rows, columns);
+        maze = recursiveDivison(grid, rows, columns);
         break;
       default:
         console.log("Error choosing Maze Generation Algorithm");
         return;
     }
     this.setState({ nodes: grid });
+    //this.animate(null, null, null, maze);
   }
 
   findPath(algorithm, grid, rows, columns) {
@@ -79,22 +81,36 @@ export default class visualiser extends Component {
     this.setState({ nodes: grid });
   }
 
-  animate(grid, closed, path) {
-    let nodeCount = closed.length;
-    for (let i = 0; i < nodeCount; i++) {
-      if (i === nodeCount - 1) {
-        for (let j = 0; j < path.length; j++) {
+  animate(grid, closed, path, walls) {
+    if (walls === undefined) {
+      let nodeCount = closed.length;
+      for (let i = 0; i < nodeCount; i++) {
+        if (i === nodeCount - 1) {
+          for (let j = 0; j < path.length; j++) {
+            setTimeout(() => {
+              path[j].isPath = true;
+              this.setState({ nodes: grid });
+            }, ANIMATION_DELAY * i);
+          }
+        }
+        if (i < closed.length) {
           setTimeout(() => {
-            path[j].isPath = true;
+            closed[i].closed = true;
             this.setState({ nodes: grid });
           }, ANIMATION_DELAY * i);
         }
       }
-      if (i < closed.length) {
-        setTimeout(() => {
-          closed[i].closed = true;
-          this.setState({ nodes: grid });
-        }, ANIMATION_DELAY * i);
+    } else {
+      console.log(walls);
+      debugger;
+      let nodeCount = walls.length;
+      for (let i = 0; i < nodeCount; i++) {
+        if (i < walls.length) {
+          setTimeout(() => {
+            walls[i].isWall = true;
+            this.setState({ nodes: grid });
+          }, ANIMATION_DELAY * i);
+        }
       }
     }
   }
