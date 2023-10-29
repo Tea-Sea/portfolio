@@ -1,13 +1,13 @@
-import React from "react";
-import { Component } from "react";
+import React from 'react';
+import { Component } from 'react';
 
-import "./Node.css";
+import './Node.css';
 
 export default class Node extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      node: "",
+      node: '',
     };
   }
 
@@ -15,21 +15,21 @@ export default class Node extends Component {
     const { column, row, isStart, isEnd, isWall, closed, open, isPath } =
       this.props;
     const nodeType = isEnd
-      ? "end"
+      ? 'end'
       : isStart
-      ? "start"
+      ? 'start'
       : isWall
-      ? "wall"
+      ? 'wall'
       : isPath
-      ? "path"
+      ? 'path'
       : closed
-      ? "closed"
+      ? 'closed'
       : open
-      ? "open"
-      : "";
+      ? 'open'
+      : '';
     return (
-      <div id={`${column},${row}`} className={"node " + nodeType}>
-        {" "}
+      <div id={`${column},${row}`} className={'node ' + nodeType}>
+        {' '}
       </div>
     );
   }
