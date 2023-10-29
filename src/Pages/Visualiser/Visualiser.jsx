@@ -4,7 +4,7 @@ import Node from './Node/Node';
 
 import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
 
-import { randomiser } from './Algorithms/Maze_Generation/Randomiser';
+import Randomise from './Algorithms/Maze_Generation/Randomiser';
 
 import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision';
 
@@ -45,7 +45,7 @@ export default class visualiser extends Component {
     this.clearGrid(grid, false);
     switch (algorithm) {
       case 0:
-        maze = randomiser(grid, rows, columns);
+        maze = Randomise(grid, rows, columns);
         break;
       case 1:
         maze = recursiveDivison(grid, rows, columns);
