@@ -1,16 +1,15 @@
-import React from "react";
-import { ReactComponent as GithubLogo } from "../../Static/Github.svg";
-import { ReactComponent as LinkedInLogo } from "../../Static/LI.svg";
-import Resume from "../../Static/Resume.pdf";
+import React from 'react';
+import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
+import { ReactComponent as LinkedInLogo } from '../../Static/LI.svg';
 
-import "./Home.css";
+import './Home.css';
 
-const home = () => {
-  document.title = "Home";
+const Home = () => {
+  document.title = 'Home';
   return (
     <div id="personalInfo">
       <h1>Tom Caspar</h1>
-      <h2>Graduate Software Engineer</h2>
+      <h2 id="subheading">Software Engineer</h2>
       <a
         href="https://github.com/Tea-Sea"
         target="_blank"
@@ -26,18 +25,9 @@ const home = () => {
       >
         <LinkedInLogo className="icon" />
       </a>
-      <div>
-        <a
-          className="resumeButton"
-          href={Resume}
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          Résumé
-        </a>
-      </div>
+      <div></div>
     </div>
   );
 };
 
-export default home;
+export default Home;

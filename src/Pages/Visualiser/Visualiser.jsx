@@ -1,20 +1,20 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Node from "./Node/Node";
+import Node from './Node/Node';
 
-import { ReactComponent as GithubLogo } from "../../Static/Github.svg";
+import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
 
-import { randomiser } from "./Algorithms/Maze_Generation/randomiser";
+import { randomiser } from './Algorithms/Maze_Generation/Randomiser';
 
-import { recursiveDivison } from "./Algorithms/Maze_Generation/RecursiveDivision";
+import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision';
 
 import {
   astar,
   closedSetResult,
   shortestPathResult,
-} from "./Algorithms/Pathfinding/astar";
+} from './Algorithms/Pathfinding/AStar';
 
-import "./Visualiser.css";
+import './Visualiser.css';
 
 var ROW_LENGTH = 21;
 var COL_LENGTH = 31;
@@ -30,28 +30,28 @@ const ANIMATION_DELAY = 40;
 export default class visualiser extends Component {
   constructor(props) {
     super(props);
-    this.state = { nodes: [], selectedNodeData: "None", mousePressed: false };
+    this.state = { nodes: [], selectedNodeData: 'None', mousePressed: false };
   }
 
   componentDidMount() {
-    document.title = "Pathfinding Visualiser";
+    document.title = 'Pathfinding Visualiser';
     const nodes = generateGrid();
     this.setState({ nodes }, () => {});
     //this.determineType(nodes);
   }
 
   generateMaze(algorithm, grid, rows, columns) {
-    let maze = [];
+    // let maze = [];
     this.clearGrid(grid, false);
     switch (algorithm) {
       case 0:
         randomiser(grid, rows, columns);
         break;
       case 1:
-        maze = recursiveDivison(grid, rows, columns);
+        recursiveDivison(grid, rows, columns);
         break;
       default:
-        console.log("Error choosing Maze Generation Algorithm");
+        console.error('Error choosing Maze Generation Algorithm');
         return;
     }
     this.setState({ nodes: grid });
@@ -75,7 +75,7 @@ export default class visualiser extends Component {
       case 1:
         break;
       default:
-        console.log("Error choosing Path Finding Algorithm");
+        console.error('Error choosing Path Finding Algorithm');
         return;
     }
     this.setState({ nodes: grid });
@@ -101,8 +101,6 @@ export default class visualiser extends Component {
         }
       }
     } else {
-      console.log(walls);
-      debugger;
       let nodeCount = walls.length;
       for (let i = 0; i < nodeCount; i++) {
         if (i < walls.length) {
@@ -157,12 +155,12 @@ export default class visualiser extends Component {
 
   displayData(node) {
     // for debug purposes
-    var neighbourData = "";
+    var neighbourData = '';
     node.neighbours.forEach(
       (neighbour) =>
-        (neighbourData += "(" + neighbour.column + "," + neighbour.row + ") ")
+        (neighbourData += '(' + neighbour.column + ',' + neighbour.row + ') ')
     );
-    const data = "[" + node.column + "," + node.row + "] ";
+    const data = '[' + node.column + ',' + node.row + '] ';
     // " Start: " +
     // node.isStart +
     // " End: " +
@@ -174,8 +172,8 @@ export default class visualiser extends Component {
 
   render() {
     const { nodes } = this.state;
-    var colWidth = 100 / COL_LENGTH + "%";
-    var rowHeight = 99 / ROW_LENGTH + "%";
+    var colWidth = 100 / COL_LENGTH + '%';
+    var rowHeight = 99 / ROW_LENGTH + '%';
 
     return (
       <>

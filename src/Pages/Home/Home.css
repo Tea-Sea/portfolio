@@ -8,18 +8,22 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+#subheading {
+  margin-top: 0;
+  margin-bottom: 5vh;
+}
 
 h1 {
   color: darkgrey;
   font-size: 3vw;
   white-space: pre;
+  margin-bottom: 1vh;
 }
 
 h2 {
   color: rgb(46, 44, 72);
   font-size: 1.5vw;
   white-space: pre;
-  transform: translate(0, -90%);
 }
 
 span {

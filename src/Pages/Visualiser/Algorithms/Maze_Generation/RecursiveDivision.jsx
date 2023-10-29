@@ -113,7 +113,6 @@ function subdivideField(field, sfArray, lineArray) {
 function generateSubfields(grid, field, sfArray, lineArray, walls) {
   subdivideField(field, sfArray, lineArray);
   if (sfArray.length < 1) {
-    console.log("complete");
     return;
   }
   addWalls(grid, lineArray[lineArray.length - 1], walls);

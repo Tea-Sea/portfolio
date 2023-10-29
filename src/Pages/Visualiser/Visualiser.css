@@ -39,6 +39,7 @@
 .legendInfo {
   display: inline;
   font-size: 1.3vw;
+  color: rgb(46, 44, 72);
 }
 
 dd {

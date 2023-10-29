@@ -26,7 +26,6 @@ export function astar(grid, rows, columns) {
     closedSet.push(currentNode);
 
     if (currentNode === endNode) {
-      console.log("solved");
       solved = true;
     } else {
       // Generate node attributes
@@ -104,7 +103,7 @@ function determineStartNode(grid, rows, columns) {
       }
     }
   }
-  console.error("No startpoint set");
+  console.error('No startpoint set');
 }
 
 function determineEndNode(grid, rows, columns) {
@@ -115,7 +114,7 @@ function determineEndNode(grid, rows, columns) {
       }
     }
   }
-  console.error("No endpoint set");
+  console.error('No endpoint set');
 }
 
 function heuristic(node, destination) {

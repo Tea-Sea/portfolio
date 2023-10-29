@@ -1,11 +1,11 @@
-import React, { Component } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import "./App.css";
+import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import './App.css';
 
-import Home from "./Pages/Home/Home";
-import About from "./Pages/About/About";
-import Error from "./Pages/Error/Error";
-import Visualiser from "./Pages/Visualiser/Visualiser";
+import Home from './Pages/Home/Home';
+import About from './Pages/About/About';
+import Error from './Pages/Error/Error';
+import Visualiser from './Pages/Visualiser/Visualiser';
 
 class App extends Component {
   render() {
@@ -13,17 +13,15 @@ class App extends Component {
       <BrowserRouter>
         <nav>
           <div id="header">
-            <a className="headerLink" href="/">
+            <Link className="headerLink" to="/">
               HOME
-            </a>
-            <a className="headerLink" href="/visualiser">
-              VISUALISER
-            </a>
-            {/*
-            <a className="headerLink" href="/about">
+            </Link>
+            <Link className="headerLink" to="/about">
               ABOUT
-            </a>
-            */}
+            </Link>
+            <Link className="headerLink" to="/visualiser">
+              VISUALISER
+            </Link>
           </div>
           <Switch>
             <Route path="/" component={Home} exact />
