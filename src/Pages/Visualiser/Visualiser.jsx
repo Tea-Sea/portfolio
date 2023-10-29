@@ -41,14 +41,14 @@ export default class visualiser extends Component {
   }
 
   generateMaze(algorithm, grid, rows, columns) {
-    // let maze = [];
+    let maze = [];
     this.clearGrid(grid, false);
     switch (algorithm) {
       case 0:
-        randomiser(grid, rows, columns);
+        maze = randomiser(grid, rows, columns);
         break;
       case 1:
-        recursiveDivison(grid, rows, columns);
+        maze = recursiveDivison(grid, rows, columns);
         break;
       default:
         console.error('Error choosing Maze Generation Algorithm');
