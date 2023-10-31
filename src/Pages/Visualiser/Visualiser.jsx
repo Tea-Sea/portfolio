@@ -8,11 +8,11 @@ import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
 
 import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision';
 
-import {
-  astar,
-  closedSetResult,
-  shortestPathResult,
-} from './Algorithms/Pathfinding/AStar';
+// import {
+//   astar,
+//   closedSetResult,
+//   shortestPathResult,
+// } from './Algorithms/Pathfinding/AStar';
 
 import './Visualiser.css';
 
