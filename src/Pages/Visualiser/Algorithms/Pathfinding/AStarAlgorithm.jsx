@@ -5,7 +5,7 @@ const PERPENDICULAR_WIEGHT = 1;
 var openSet;
 var closedSet;
 
-export function astar(grid, rows, columns) {
+export function aStar(grid, rows, columns) {
   openSet = [];
   closedSet = [];
   var solved = false;

@@ -6,11 +6,11 @@ import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
 
 import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision';
 import { randomise } from './Algorithms/Maze_Generation/RandomMaze';
-// import {
-//   astar,
-//   closedSetResult,
-//   shortestPathResult,
-// } from './Algorithms/Pathfinding/AStar';
+import {
+  aStar,
+  closedSetResult,
+  shortestPathResult,
+} from './Algorithms/Pathfinding/AStarAlgorithm';
 
 import './Visualiser.css';
 
@@ -63,12 +63,12 @@ export default class visualiser extends Component {
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
-        // astar(grid, rows, columns);
-        // closedSet = closedSetResult();
-        // shortestPath = shortestPathResult(
-        //   grid[ROW_START][COL_START],
-        //   grid[ROW__END][COL_END]
-        // );
+        aStar(grid, rows, columns);
+        closedSet = closedSetResult();
+        shortestPath = shortestPathResult(
+          grid[ROW_START][COL_START],
+          grid[ROW__END][COL_END]
+        );
         this.animate(grid, closedSet, shortestPath);
         break;
       case 1:
