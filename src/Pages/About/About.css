@@ -1,6 +1,10 @@
+#content {
+  margin-left: 5vw;
+  margin-right: 5vw;
+  background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
+}
+
 p {
-  padding-left: 5vw;
-  padding-right: 5vw;
   margin-bottom: 0;
   margin-top: 0;
   color: darkgrey;
