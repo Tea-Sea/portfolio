@@ -4,8 +4,8 @@ import Node from './Node/Node';
 
 import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
 
-import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision.jsx';
-import { randomise } from './Algorithms/Maze_Generation/Randomiser.jsx';
+import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision';
+import { randomise } from './Algorithms/Maze_Generation/RandomMaze';
 // import {
 //   astar,
 //   closedSetResult,
@@ -50,6 +50,7 @@ export default class visualiser extends Component {
         break;
       default:
         console.error('Error choosing Maze Generation Algorithm');
+        maze = [];
         return;
     }
     this.setState({ nodes: grid });
