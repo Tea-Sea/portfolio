@@ -4,10 +4,8 @@ import Node from './Node/Node';
 
 import { ReactComponent as GithubLogo } from '../../Static/Github.svg';
 
-import { randomise } from './Algorithms/Maze_Generation/Randomiser';
-
-import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision';
-
+import { recursiveDivison } from './Algorithms/Maze_Generation/RecursiveDivision.jsx';
+import { randomise } from './Algorithms/Maze_Generation/Randomiser.jsx';
 // import {
 //   astar,
 //   closedSetResult,
