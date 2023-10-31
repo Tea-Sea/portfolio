@@ -64,12 +64,12 @@ export default class visualiser extends Component {
     this.clearGrid(grid, true);
     switch (algorithm) {
       case 0:
-        astar(grid, rows, columns);
-        closedSet = closedSetResult();
-        shortestPath = shortestPathResult(
-          grid[ROW_START][COL_START],
-          grid[ROW__END][COL_END]
-        );
+        // astar(grid, rows, columns);
+        // closedSet = closedSetResult();
+        // shortestPath = shortestPathResult(
+        //   grid[ROW_START][COL_START],
+        //   grid[ROW__END][COL_END]
+        // );
         this.animate(grid, closedSet, shortestPath);
         break;
       case 1:
