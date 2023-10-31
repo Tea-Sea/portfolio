@@ -72,11 +72,10 @@ dd {
 }
 
 #githubLogo {
-  position: fixed;
-  margin-bottom: 0.4vw;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  margin-bottom: 0.2vw;
+  margin-top: 10vh;
 }
 
 @media only screen and (max-width: 600px) {
