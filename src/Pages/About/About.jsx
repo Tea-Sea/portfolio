@@ -8,11 +8,11 @@ function About() {
       <h1>About Me</h1>
       <span></span>
       <p>
-        Hello there! I'm <b>Tom Caspar</b>, a highly motivated and recently
-        graduated software engineer with a deep passion for technology and
-        innovation. Armed with a strong educational background and hands-on
-        experience in software development, I am enthusiastic about solving
-        complex problems through creative and efficient solutions.
+        Hello there! I'm <b>Tom Caspar</b>, a highly motivated software engineer
+        with a deep passion for technology and innovation. Armed with a strong
+        educational background and hands-on experience in software development,
+        I am enthusiastic about solving complex problems through creative and
+        efficient solutions.
       </p>
       <h2>Education:</h2>
       <p>
@@ -27,13 +27,13 @@ function About() {
       <h2>Skills:</h2>
       <h3>Programming Languages:</h3>
       <p>
-        Proficient in languages such as <b>JavaScript, Python, and C#</b>, with
+        Proficient in languages such as <b>C++, JavaScript, Python and C#</b>, with
         a focus on writing clean, efficient, and well-documented code.
       </p>
       <h3>Web Technologies:</h3>
       <p>
         Knowledgeable in web development technologies including{' '}
-        <b>HTML, CSS, JavaScript</b>, and frameworks like{' '}
+        <b>HTML, CSS, JavaScript</b>, and frameworks such as{' '}
         <b>React and Angular</b>.
       </p>
       <h3>Version Control:</h3>
@@ -69,8 +69,7 @@ function About() {
         knowledge to create impactful software that makes a difference in
         people's lives. I am currently seeking opportunities to collaborate on
         challenging projects, where I can apply my expertise and continue to
-        grow as a software engineer. Let's connect and explore the endless
-        possibilities of technology together!
+        grow as a software engineer.
       </p>
     </div>
   );
